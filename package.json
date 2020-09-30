@@ -16,5 +16,9 @@
   "devDependencies": {
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4.1.46"
-  }
+  },
+  "repository": {
+    "url": "https://github.com/hansputera/brainly-scraper-languages"
+  },
+  "readme": "https://github.com/hansputera/brainly-scraper-languages/blob/master/README.md"
 }
