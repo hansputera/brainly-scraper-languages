@@ -1,6 +1,7 @@
 # Brainly Scraper
 Library to scrape `www.brainly.com`
-**LICENSE: [BrainlyScraper_Official](https://github.com/defrindr/brainly-scraper)""
+
+**LICENSE: [BrainlyScraper_Official](https://github.com/defrindr/brainly-scraper)**
 
 ## Installation
 
@@ -18,7 +19,7 @@ npm i brainly-scraper
 |------|----------|-------------|
 | query|    ✖     | The keywords you want to find |
 | count|    ✔     | Total data to be displayed |
-| langu|    ✖     | Language customize | 
+| language|    ✖     | Language customize | 
 
 ## Example
 
@@ -113,7 +114,7 @@ Output:
 
 ### Available languages
 ```json
-{
+[
     "id",
     "us",
     "es",
@@ -124,7 +125,7 @@ Output:
     "ph",
     "pl",
     "hi"
-};
+]
 ```
 
 ## Contribution
