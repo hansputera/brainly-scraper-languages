@@ -1,5 +1,6 @@
 # Brainly Scraper
 Library to scrape `www.brainly.com`
+
 **LICENSE: [BrainlyScraper_Official](https://github.com/defrindr/brainly-scraper)**
 
 ## Installation
