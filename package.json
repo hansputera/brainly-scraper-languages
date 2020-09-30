@@ -1,0 +1,20 @@
+{
+  "name": "@brainly-scraper/v2",
+  "version": "1.0.0",
+  "description": "Utilities for brainly-scraper. Support all countries of brainly company.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./dist/test/index.test.js",
+    "start": "node ./dist"
+  },
+  "author": "Hanif",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "@types/request": "^2.48.5",
+    "@types/request-promise": "^4.1.46"
+  }
+}
