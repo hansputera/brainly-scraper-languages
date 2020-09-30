@@ -114,7 +114,7 @@ Output:
 
 ### Available languages
 ```json
-{
+[
     "id",
     "us",
     "es",
@@ -125,7 +125,7 @@ Output:
     "ph",
     "pl",
     "hi"
-};
+]
 ```
 
 ## Contribution
