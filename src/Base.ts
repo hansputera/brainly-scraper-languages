@@ -9,7 +9,7 @@ const Brainly = async (query: string, count: number, lang?: string) => {
     _required(query);
     _required(count);
     if (lang) language = lang;
-    else language = "id"; // default : id alias Indonesia
+    else language = "id";
 
     if (!countryCode.includes(language.toLowerCase())) throw new BrainlyError("LANGUAGE_DOESNT_EXIST", language.toLowerCase());
     const service = {
