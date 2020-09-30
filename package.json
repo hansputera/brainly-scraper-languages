@@ -1,7 +1,7 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "1.0.1",
-  "description": "Brainly-Scraper version 2. Support all countries of brainly company.",
+  "version": "1.0.2",
+  "description": "Brainly-Scraper version 2.",
   "main": "dist/index.js",
   "scripts": {
     "test": "node ./dist/test/index.test.js",

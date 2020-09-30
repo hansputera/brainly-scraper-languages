@@ -16,7 +16,7 @@ const Brainly = async (query, count, lang) => {
     if (lang)
         language = lang;
     else
-        language = "id"; // default : id alias Indonesia
+        language = "id";
     if (!App_1.countryCode.includes(language.toLowerCase()))
         throw new BrainlyError_1.default("LANGUAGE_DOESNT_EXIST", language.toLowerCase());
     const service = {

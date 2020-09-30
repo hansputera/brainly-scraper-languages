@@ -6,11 +6,11 @@ Library to scrape `www.brainly.com`
 ## Installation
 
 ```
-npm install @defrindr/brainly-scraper
+npm install brainly-scraper-v2
 ```
 or
 ```
-npm i brainly-scraper
+npm i brainly-scraper-v2
 ```
 
 ## Parameters
