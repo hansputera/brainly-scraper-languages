@@ -1,5 +1,5 @@
 {
-  "name": "@brainly-scraper/v2",
+  "name": "brainly-scraper-v2",
   "version": "1.0.0",
   "description": "Brainly-Scraper version 2. Support all countries of brainly company.",
   "main": "dist/index.js",
