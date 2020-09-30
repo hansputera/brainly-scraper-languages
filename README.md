@@ -26,7 +26,7 @@ npm i brainly-scraper-v2
 ### Simple Usage
 
 ```javascript
-const brainly = require('brainly-scraper');
+const brainly = require('brainly-scraper-v2');
 
 brainly("nkri", 5, "id").then(res => {
 	console.log(res);
@@ -36,7 +36,7 @@ brainly("nkri", 5, "id").then(res => {
 Or
 
 ```typescript
-import brainly from 'brainly-scraper';
+import brainly from 'brainly-scraper-v2';
 
 brainly("nkri", 5, "id").then(res => {
 	console.log(res);
