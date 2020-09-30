@@ -94,7 +94,7 @@ Output :
 
 ### Error Response
 ```javascript
-import brainly from 'brainly-scraper';
+import brainly from 'brainly-scraper-v2';
 
 brainly().then(res => {
 	console.log(res);
