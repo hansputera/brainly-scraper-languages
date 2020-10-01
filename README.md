@@ -19,7 +19,7 @@ npm i brainly-scraper-v2
 |------|----------|-------------|
 | query|    ✖     | The keywords you want to find |
 | count|    ✔     | Total data to be displayed |
-| language|    ✖     | Language customize | 
+| language|    ✔     | Language customize | 
 
 ## Example
 
