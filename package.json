@@ -1,6 +1,6 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Brainly-Scraper version 2.",
   "main": "dist/index.js",
   "scripts": {
