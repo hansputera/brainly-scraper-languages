@@ -37,6 +37,6 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: npm try to publish the package if it's a new version
       continue-on-error: true
-      run: npm publish
+      run: npm publish --access=publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
