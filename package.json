@@ -1,6 +1,6 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Brainly-Scraper version 2.",
   "main": "dist/index.js",
   "scripts": {
@@ -20,5 +20,5 @@
   "repository": {
     "url": "https://github.com/hansputera/brainly-scraper-languages"
   },
-  "readme": "https://github.com/hansputera/brainly-scraper-languages/blob/master/README.md"
+  "readme": "https://github.com/hansputera/brainly-scraper-languages/blob/dev/README.md"
 }
