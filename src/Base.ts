@@ -1,6 +1,19 @@
 import { post } from "request-promise";
 import { clean, _required } from "./utils/Core";
-import { countryCode } from "./App";
+const lists = {
+    "id": "https://brainly.co.id",
+    "us": "https://brainly.com",
+    "es": "https://brainly.lat",
+    "pt": "https://brainly.com.br",
+    "ru": "https://znanija.com",
+    "ro": "https://brainly.ro",
+    "tr": "https://eodev.com",
+    "ph": "https://brainly.ph",
+    "pl": "https://brainly.pl",
+    "hi": "https://brainly.in"
+};
+
+const countryCode = Object.keys(lists);
 import BrainlyError from "./utils/BrainlyError";
 import type { Jawaban, FinalData, Answers, QuestionList, Languages } from "./@typings";
 

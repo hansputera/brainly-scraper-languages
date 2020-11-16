@@ -6,7 +6,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = void 0;
 const request_promise_1 = require("request-promise");
 const Core_1 = require("./utils/Core");
-const App_1 = require("./App");
+const lists = {
+    "id": "https://brainly.co.id",
+    "us": "https://brainly.com",
+    "es": "https://brainly.lat",
+    "pt": "https://brainly.com.br",
+    "ru": "https://znanija.com",
+    "ro": "https://brainly.ro",
+    "tr": "https://eodev.com",
+    "ph": "https://brainly.ph",
+    "pl": "https://brainly.pl",
+    "hi": "https://brainly.in"
+};
+const countryCode = Object.keys(lists);
 const BrainlyError_1 = __importDefault(require("./utils/BrainlyError"));
 const format_graphql = `query SearchQuery($query: String!, $first: Int!, $after: ID) {\n	questionSearch(query: $query, first: $first, after: $after) {\n	edges {\n	  node {\ncontent\n		attachments{\nurl\n}\n		answers {\n			nodes {\ncontent\n				attachments{\nurl\n}\n}\n}\n}\n}\n}\n}\n`;
 /**
@@ -22,7 +34,7 @@ const Brainly = async (query, count, lang) => {
         language = lang;
     else
         language = "id";
-    if (!App_1.countryCode.includes(language.toLowerCase()))
+    if (!countryCode.includes(language.toLowerCase()))
         throw new BrainlyError_1.default("LANGUAGE_DOESNT_EXIST", language.toLowerCase());
     const service = {
         uri: 'https://brainly.com/graphql/' + language.toLowerCase(),
