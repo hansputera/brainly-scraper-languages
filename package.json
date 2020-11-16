@@ -1,0 +1,24 @@
+{
+  "name": "brainly-scraper-v2",
+  "version": "1.0.5",
+  "description": "Brainly-Scraper version 2.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "node ./dist/test/index.test.js",
+    "start": "node ./dist"
+  },
+  "author": "Hanif",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "@types/request": "^2.48.5",
+    "@types/request-promise": "^4.1.46"
+  },
+  "repository": {
+    "url": "https://github.com/hansputera/brainly-scraper-languages"
+  },
+  "readme": "https://github.com/hansputera/brainly-scraper-languages/blob/master/README.md"
+}
