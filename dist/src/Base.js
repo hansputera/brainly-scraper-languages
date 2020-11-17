@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = void 0;
-const request_promise_1 = require("request-promise");
+const axios_1 = __importDefault(require("axios"));
 const Core_1 = require("./utils/Core");
 const lists = {
     "id": "https://brainly.co.id",
@@ -37,14 +37,14 @@ const Brainly = async (query, count, lang) => {
     if (!countryCode.includes(language.toLowerCase()))
         throw new BrainlyError_1.default("LANGUAGE_DOESNT_EXIST", language.toLowerCase());
     const service = {
-        uri: 'https://brainly.com/graphql/' + language.toLowerCase(),
-        json: true,
+        method: "POST",
+        url: `https://brainly.com/graphql/${language.toLowerCase()}`,
         headers: {
             'host': 'brainly.com',
             "content-type": "application/json; charset=utf-8",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36"
         },
-        body: {
+        data: {
             "operationName": "SearchQuery",
             "variables": {
                 "query": query,
@@ -54,42 +54,41 @@ const Brainly = async (query, count, lang) => {
             "query": format_graphql
         }
     };
-    return await request_promise_1.post(service).then(response => {
-        let question_list = response.data.questionSearch.edges;
-        if (question_list.length) {
-            let final_data = [];
-            question_list.forEach(question => {
-                let jawaban = [];
-                let answers = question.node.answers.nodes;
-                if (answers.length) {
-                    answers.forEach((answer) => {
-                        jawaban.push({
-                            text: Core_1.clean(answer.content),
-                            media: (answer.attachments.length) ? answer.attachments.map((file) => file.url) : []
-                        });
+    const response = await axios_1.default(service);
+    let question_list = response.data.data.questionSearch.edges;
+    if (question_list.length) {
+        let final_data = [];
+        question_list.forEach(question => {
+            let jawaban = [];
+            let answers = question.node.answers.nodes;
+            if (answers.length) {
+                answers.forEach((answer) => {
+                    jawaban.push({
+                        text: Core_1.clean(answer.content),
+                        media: (answer.attachments.length) ? answer.attachments.map((file) => file.url) : []
                     });
-                }
-                final_data.push({
-                    "pertanyaan": Core_1.clean(question.node.content),
-                    "jawaban": jawaban,
-                    "questionMedia": (question.node.attachments.length) ? question.node.attachments.map((file) => file.url) : [],
                 });
+            }
+            final_data.push({
+                "pertanyaan": Core_1.clean(question.node.content),
+                "jawaban": jawaban,
+                "questionMedia": (question.node.attachments.length) ? question.node.attachments.map((file) => file.url) : [],
             });
-            return {
-                'success': true,
-                'length': final_data.length,
-                'message': 'Request Success',
-                'data': final_data
-            };
-        }
-        else {
-            return {
-                'success': true,
-                'length': 0,
-                'message': 'Data not found',
-                'data': []
-            };
-        }
-    });
+        });
+        return {
+            'success': true,
+            'length': final_data.length,
+            'message': 'Request Success',
+            'data': final_data
+        };
+    }
+    else {
+        return {
+            'success': true,
+            'length': 0,
+            'message': 'Data not found',
+            'data': []
+        };
+    }
 };
 exports.default = Brainly;

@@ -10,8 +10,8 @@
   "author": "Hanif",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6"
+    "axios": "^0.21.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/request": "^2.48.5",

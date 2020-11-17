@@ -1,4 +1,4 @@
-import { post } from "request-promise";
+import axios, { AxiosRequestConfig } from "axios";
 import { clean, _required } from "./utils/Core";
 const lists = {
     "id": "https://brainly.co.id",
@@ -32,15 +32,15 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
     else language = "id";
 
     if (!countryCode.includes(language.toLowerCase())) throw new BrainlyError("LANGUAGE_DOESNT_EXIST", language.toLowerCase());
-    const service = {
-		uri: 'https://brainly.com/graphql/' + language.toLowerCase(),
-		json: true,
+    const service: AxiosRequestConfig = {
+        method: "POST",
+        url: `https://brainly.com/graphql/${language.toLowerCase()}`,
 		headers: {
 			'host': 'brainly.com',
 			"content-type": "application/json; charset=utf-8",
 			"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36"
 		},
-		body: {
+		data: {
 			"operationName": "SearchQuery",
 			"variables": {
 				"query": query,
@@ -50,8 +50,8 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
 			"query": format_graphql
 		}
     };
-    return await post(service).then(response => {
-        let question_list = response.data.questionSearch.edges as QuestionList[];
+    const response = await axios(service);
+        let question_list = response.data.data.questionSearch.edges as QuestionList[];
         if (question_list.length) {
             let final_data: FinalData[] = [];
             question_list.forEach(question => {
@@ -87,7 +87,6 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
 				'data': []
 			};
         }
-    });
 };
 
 export { Brainly as default }
