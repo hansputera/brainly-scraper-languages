@@ -6,6 +6,7 @@
 declare const Brainly1: (query: string, count?: number, lang?: "tr" | "id" | "us" | "es" | "pt" | "ru" | "ro" | "ph" | "pl" | "hi" | undefined) => Promise<{
     success: boolean;
     length: number;
+    headers: any;
     message: string;
     data: import("./src/@typings").FinalData[];
 }>;

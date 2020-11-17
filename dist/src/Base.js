@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = void 0;
 const axios_1 = __importDefault(require("axios"));
+const random_useragent_1 = __importDefault(require("random-useragent"));
 const Core_1 = require("./utils/Core");
 const lists = {
     "id": "https://brainly.co.id",
@@ -39,10 +40,15 @@ const Brainly = async (query, count, lang) => {
     const service = {
         method: "POST",
         url: `https://brainly.com/graphql/${language.toLowerCase()}`,
+        proxy: {
+            host: "1.1.1.1",
+            port: 443,
+            protocol: "https"
+        },
         headers: {
             'host': 'brainly.com',
             "content-type": "application/json; charset=utf-8",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36"
+            "user-agent": random_useragent_1.default.getRandom(o => o.browserName === "Chrome")
         },
         data: {
             "operationName": "SearchQuery",
@@ -78,6 +84,7 @@ const Brainly = async (query, count, lang) => {
         return {
             'success': true,
             'length': final_data.length,
+            'headers': response.headers,
             'message': 'Request Success',
             'data': final_data
         };
@@ -86,6 +93,7 @@ const Brainly = async (query, count, lang) => {
         return {
             'success': true,
             'length': 0,
+            'headers': response.headers,
             'message': 'Data not found',
             'data': []
         };

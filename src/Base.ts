@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import UserAgent from "random-useragent";
 import { clean, _required } from "./utils/Core";
 const lists = {
     "id": "https://brainly.co.id",
@@ -24,6 +25,7 @@ const format_graphql = `query SearchQuery($query: String!, $first: Int!, $after:
  * @param {Integer} count Jumlah data yang akan ditampilkan
  * @param {Languages} lang Bahasa yang akan dipilih
  */
+
 const Brainly = async (query: string, count: number, lang?: Languages) => {
     let language = "";
     _required(query);
@@ -35,11 +37,16 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
     const service: AxiosRequestConfig = {
         method: "POST",
         url: `https://brainly.com/graphql/${language.toLowerCase()}`,
+        proxy: {
+            host: "1.1.1.1",
+            port: 443,
+            protocol: "https"
+        },
 		headers: {
 			'host': 'brainly.com',
-			"content-type": "application/json; charset=utf-8",
-			"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36"
-		},
+            "content-type": "application/json; charset=utf-8",
+            "user-agent": UserAgent.getRandom(o => o.browserName === "Chrome")
+        },
 		data: {
 			"operationName": "SearchQuery",
 			"variables": {
@@ -50,6 +57,7 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
 			"query": format_graphql
 		}
     };
+
     const response = await axios(service);
         let question_list = response.data.data.questionSearch.edges as QuestionList[];
         if (question_list.length) {
@@ -76,13 +84,15 @@ const Brainly = async (query: string, count: number, lang?: Languages) => {
             return {
                     'success': true,
                     'length': final_data.length,
+                    'headers': response.headers,
                     'message': 'Request Success',
                     'data': final_data
             };
         } else {
             return {
 				'success': true,
-				'length': 0,
+                'length': 0,
+                'headers': response.headers,
 				'message': 'Data not found',
 				'data': []
 			};

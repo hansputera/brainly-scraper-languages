@@ -7,6 +7,7 @@ import type { FinalData } from "./@typings";
 declare const Brainly: (query: string, count: number, lang?: "tr" | "id" | "us" | "es" | "pt" | "ru" | "ro" | "ph" | "pl" | "hi" | undefined) => Promise<{
     success: boolean;
     length: number;
+    headers: any;
     message: string;
     data: FinalData[];
 }>;

@@ -1,6 +1,6 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Brainly-Scraper version 2.",
   "main": "dist/index.js",
   "scripts": {
@@ -11,9 +11,11 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.0",
+    "random-useragent": "^0.5.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "@types/random-useragent": "^0.3.0",
     "@types/request": "^2.48.5",
     "@types/request-promise": "^4.1.46"
   },
