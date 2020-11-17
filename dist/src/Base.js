@@ -40,15 +40,11 @@ const Brainly = async (query, count, lang) => {
     const service = {
         method: "POST",
         url: `https://brainly.com/graphql/${language.toLowerCase()}`,
-        proxy: {
-            host: "1.1.1.1",
-            port: 443,
-            protocol: "https"
-        },
         headers: {
             'host': 'brainly.com',
             "content-type": "application/json; charset=utf-8",
-            "user-agent": random_useragent_1.default.getRandom(o => o.browserName === "Chrome")
+            "user-agent": random_useragent_1.default.getRandom(o => o.browserName === "Chrome"),
+            Cookie: "__cfduid=d09529a66d402ab3543218ec851b195391605619464; ocean_session=1605619467666.e3icoxub; _gcl_au=1.1.1168484837.1605619468; _ga=GA1.2.426419907.1605619471; _gid=GA1.2.155266724.1605619471; notice_behavior=implied,us; _hjid=20de5b6d-3500-4296-9225-7122fba9b118; _fbp=fb.1.1605619472894.1094241102; datadome=Ns8ZemF1Fm5rC_O979DbXVOY6n51DbHxGoLGIiE_jD3LL~J.5rBAgcBR0-WMlaaVpJuPXftePkozRCh57FHFdLyvaU6zqrk-5XWT1pvoqz; __qca=P0-781932269-1605619473513"
         },
         data: {
             "operationName": "SearchQuery",
