@@ -28,7 +28,7 @@ npm i brainly-scraper-v2
 ```javascript
 const brainly = require('brainly-scraper-v2');
 
-brainly("nkri", 5, "id").then(res => {
+brainly("1+1", 5, "id").then(res => {
 	console.log(res);
 });
 ```
