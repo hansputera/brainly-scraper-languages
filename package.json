@@ -11,13 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.0",
-    "random-useragent": "^0.5.0",
-    "request": "^2.88.2"
+    "random-useragent": "^0.5.0"
   },
   "devDependencies": {
-    "@types/random-useragent": "^0.3.0",
-    "@types/request": "^2.48.5",
-    "@types/request-promise": "^4.1.46"
+    "@types/random-useragent": "^0.3.0"
   },
   "repository": {
     "url": "https://github.com/hansputera/brainly-scraper-languages"
