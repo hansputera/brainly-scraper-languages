@@ -1,5 +1,7 @@
 export default class BrainlyError extends Error {
-    constructor(public name: string, message?: string) {
+    constructor(message: string) {
         super(message);
+
+        this.name = "BrainlyError";
     }
 }

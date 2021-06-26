@@ -1,132 +1,56 @@
-# Brainly Scraper
-Library to scrape `www.brainly.com`
+# Brainly Scraper V2
+This library retrieves data from Brainly that has been designed to avoid `403 Forbidden` exception.
 
-**LICENSE: [BrainlyScraper_Official](https://github.com/defrindr/brainly-scraper)**
+> To avoid such errors, you can fill in a valid country code according to the location of your hosting server. For example, heroku, heroku with the United States region. That is, you must fill in the code `us` as the country code inside the brainly parameter constructor.
 
-## Installation
+You can test the 10 languages or country codes available to see if your server hosting country location or location is rejected.
 
+# 💉 Installation
+- Using NPM : `npm install brainly-scraper-v2`
+- Using YARN : `yarn add brainly-scraper-v2`
+
+# 📜 How to use
+> WARNING:  Make sure the country code you entered in the constructor is correct.
+
+- Code
+```js
+const Brainly = require("brainly-scraper-v2");
+const brain = new Brainly("id"); // 'id' - Default to 'id'
+
+brain.search("es", "Pythagoras").then(console.log).catch(console.error);
 ```
-npm install brainly-scraper-v2
-```
-or
-```
-npm i brainly-scraper-v2
-```
-
-## Parameters
-
-| Name | Nullable | Description |
-|------|----------|-------------|
-| query|    ✖     | The keywords you want to find |
-| count|    ✔     | Total data to be displayed |
-| language|    ✔     | Language customize | 
-
-## Example
-
-### Simple Usage
-
-```javascript
-const brainly = require('brainly-scraper-v2');
-
-brainly("nkri", 5, "id").then(res => {
-	console.log(res);
-});
-```
-
-Or
-
-```typescript
-import brainly from 'brainly-scraper-v2';
-
-brainly("nkri", 5, "id").then(res => {
-	console.log(res);
-});
-```
-
-Output : 
-
-```javascript
-{
-    "success": true,
-    "length": 5,
-    "message": "Request Success",
-    "data": [{
-        "pertanyaan": "pengertian NKRI, tujuan NKRI, unsur NKRI, dan fungsi NKRI",
-        "jawaban": [{
-            "text": "pengertian Negara Kesatuan Republik Indonesia",
-            "media": []
-        }],
-        "questionMedia": []
-    }, {
-        "pertanyaan": "NKRI adalah \n\n NKRI adalah",
-        "jawaban": [{
-            "text": "NKRINegara Kesatuan Republik Indonesia (NKRI) adalah bentuk negara yang terdiri atas banyak wilayah/kepulauan yang tersebar dengan keanekaragaman adat, suku, budaya, dan keyakinan yang memiliki tujuan dasar menjadi bangsa yang merdeka, berdaulat, bersatu, adil, dan makmur dengan pemerintah yang melindungi segenap bangsa Indonesia dan seluruh tumpah darah Indonesia serta mewujudkan kesejahteraan umum, mencerdaskan kehidupan bangsa, dan melaksanakan ketertiban dunia Faktor-faktor penting pembentukan bangsa indonesia sebagai berikutAdanya persamaan nasibAdanya keinginan bersama untuk merdeka, melepaskan diri dari belenggu penjajahan.Adanya kesatuan tempat tinggal.Adanya cita-cita bersama untuk mencapai kemakmuran dan keadilan sebagai suatu bangsa.Pelajari Lebih Lanjut  \nTujuan NKRIhttps://brainly.co.id/tugas/8551985NKRI diperoleh melaluihttps://brainly.co.id/tugas/13703138\n================\nDetail Jawaban  Mapel :  PPKnKelas :  12Materi :  Bab 7 - Dinamika Penyelenggaraan Negara dalam Konteks NKRI dan Negara FederalKata Kunci :  Kelas 12 PPKn Bab 7 - Dinamika Penyelenggaraan Negara dalam Konteks NKRI dan Negara FederalKode Soal :  9Kode Kategorisasi :  12.9.7\n#Jefanya14",
-            "media": []
-        }],
-        "questionMedia": []
-    }, {
-        "pertanyaan": "NKRI NKRI diperoleh melalui... ",
-        "jawaban": [{
-            "text": "Negara Kesatuan Republik Indonesia diperoleh melalui perjuangan para pahlawan mengusir penjajah",
-            "media": []
-        }],
-        "questionMedia": []
-    }, {
-        "pertanyaan": "Apa yang dimaksud dengan NKRI ? (NKRI adalah...)",
-        "jawaban": [{
-            "text": "Negara Kesatuan Republik Indonesia",
-            "media": []
-        }],
-        "questionMedia": []
-    }, {
-        "pertanyaan": "Apa yang dimaksud dengan NKRI ? (NKRI adalah...)",
-        "jawaban": [{
-            "text": "Nkri adalah negara kesatuan republik indonesia",
-            "media": []
-        }, {
-            "text": "negara kesatuan republik indonesia",
-            "media": []
-        }],
-        "questionMedia": []
-    }]
-}
-```
-
-### Error Response
-```javascript
-import brainly from 'brainly-scraper-v2';
-
-brainly().then(res => {
-	console.log(res);
-});
-```
-
-Output:
-
-```javascript
-{ 
-  success: false,
-  message: 'Param cant be blank'
-}
-```
-	Tips :
-	You can use JSON.stringify() to get string output
-
-### Available languages
+- Output
 ```json
 [
-    "id",
-    "us",
-    "es",
-    "pt",
-    "ru",
-    "ro",
-    "tr",
-    "ph",
-    "pl",
-    "hi"
+    {
+        "question": {
+            "id": 5070014,
+            "content": "Pythagoras nació en el año 580 a.c  y murió en el año 501. ¿Que edad tenia Pythagoras Cúando murió?",
+            "attachments": [],
+            "author": {
+                "id": 3467036,
+                "avatar_url": "https://es-static.z-dn.net/files/d9d/8f696cce4d637d278ba011b6159642b8.jpg",
+                "deleted": false,
+                "url": "https://brainly.lat/app/profile/3467036",
+                "rank": "Aspirante",
+                "username": "BeeluuCabj"
+            }
+        },
+        "answers": [
+            {
+                "content": "Como nació y murió a.c.... \n" +
+          "-501-(-580) -- -501+580= 79... Edad que tenía cuando murió.",
+                "attachments": [],
+                "rates": 4,
+                "rating": 3.75
+            }
+        ]
+    }, { ... }
 ]
 ```
 
-## Contribution
-Contributions are welcome.
+# ⚙️ Issues and Bugs
+If you have problems using this library, you can create an issue in the [github repository](https://github.com/hansputera/brainly-scraper-languages). Remember, don't forget to read the instructions and try.
+
+# ✍️ Contributions
+Do you want to contribute with this library for the better? Very well, fork this [github repository](https://github.com/hansputera/brainly-scraper-languages) then install dependencies to your directory. Happy coding 😁

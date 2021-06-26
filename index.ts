@@ -1,7 +1,3 @@
-import Brainly from "./src/Base";
+import Brainly from "./src/main";
 
-const Brainly1 = async (query: string, count = 5, lang?: string) => {
-    return await Brainly(query, count, lang);
-}
-
-export = Brainly1;
+export = Brainly;
