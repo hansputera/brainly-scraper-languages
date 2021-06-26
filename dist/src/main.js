@@ -45,21 +45,48 @@ class Brainly {
                 id: obj.node.databaseId,
                 content: util_1.default.clearContent(obj.node.content),
                 attachments: obj.node.attachments.map(attach => attach.url),
-                author: {
+                author: obj.node.author ? {
                     id: obj.node.author.databaseId,
                     avatar_url: obj.node.author.avatar ? obj.node.author.avatar.thumbnailUrl : undefined,
                     deleted: obj.node.author.isDeleted,
                     url: `${this.getBaseURL(language)}/app/profile/${obj.node.author.databaseId}`,
                     rank: obj.node.author.rank.name,
-                    username: obj.node.author.nick
+                    username: obj.node.author.nick,
+                    receivedThanks: obj.node.author.receivedThanks,
+                    bestAnswersCount: obj.node.author.bestAnswersCount,
+                    gender: obj.node.author.gender,
+                    description: obj.node.author.description,
+                    points: obj.node.author.points,
+                    helpedUsersCount: obj.node.author.helpedUsersCount
+                } : undefined,
+                points: {
+                    points: obj.node.points,
+                    forBest: obj.node.pointsForBest
                 },
-                url: `${this.getBaseURL(language)}/${language.toLowerCase() == "id" ? "tugas" : "question"}/${obj.node.databaseId}`
+                created: obj.node.created,
+                url: `${this.getBaseURL(language)}/${util_1.default.resolveWorkName(language.toLowerCase())}/${obj.node.databaseId}`
             };
             const answers = obj.node.answers.nodes.map(answerObj => ({
                 content: util_1.default.clearContent(answerObj.content),
                 attachments: answerObj.attachments.map(attach => attach.url),
                 rates: answerObj.ratesCount,
-                rating: answerObj.rating
+                rating: answerObj.rating,
+                isBest: answerObj.isBest,
+                created: answerObj.created,
+                author: answerObj.author ? {
+                    id: answerObj.author.databaseId,
+                    username: answerObj.author.nick,
+                    gender: answerObj.author.gender,
+                    avatar_url: answerObj.author.avatar ? answerObj.author.avatar.thumbnailUrl : undefined,
+                    deleted: answerObj.author.isDeleted,
+                    url: `${this.getBaseURL(language.toLowerCase())}/app/profile/${answerObj.author.databaseId}`,
+                    description: answerObj.author.description,
+                    bestAnswersCount: answerObj.author.bestAnswersCount,
+                    points: answerObj.author.points,
+                    helpedUsersCount: answerObj.author.helpedUsersCount,
+                    receivedThanks: answerObj.author.receivedThanks,
+                    rank: answerObj.author.rank.name
+                } : undefined
             }));
             return {
                 question, answers

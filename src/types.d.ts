@@ -5,9 +5,14 @@ export type Attachments = string[];
 export interface Question {
     id: number;
     content: string;
-    author: Author;
+    author?: Author;
     attachments: Attachments;
     url: string;
+    created: string;
+    points: {
+        points: number;
+        forBest: number;
+    }
 }
 
 export interface Author {
@@ -17,6 +22,12 @@ export interface Author {
     avatar_url?: string;
     deleted: boolean;
     rank: string;
+    description: string;
+    gender: string;
+    points: number;
+    receivedThanks: number;
+    bestAnswersCount: number;
+    helpedUsersCount: number;
 }
 
 export interface Answer {
@@ -24,6 +35,9 @@ export interface Answer {
     attachments: Attachments;
     rates: number;
     rating: number;
+    author?: Author;
+    isBest: boolean;
+    created: string;
 }
 
 export interface BrainlyResponse {
@@ -32,8 +46,11 @@ export interface BrainlyResponse {
     }
     node: {
         id: string;
+        created: string;
         databaseId: number;
         content: string;
+        points: number;
+        pointsForBest: number;
         author: {
             avatar: {
                 thumbnailUrl: string;
@@ -44,7 +61,13 @@ export interface BrainlyResponse {
             nick: string;
             rank: {
                 name: string;
-            }
+            };
+            description: string;
+            points: number;
+            receivedThanks: number;
+            bestAnswersCount: number;
+            helpedUsersCount: number;
+            gender: string;
         }
         answers: {
             hasVerified: boolean;
@@ -54,6 +77,10 @@ export interface BrainlyResponse {
                 thanksCount: number;
                 content: string;
                 attachments: { url: string; }[];
+                author: BrainlyResponse["node"]["author"];
+                isBest: boolean;
+                points: number;
+                created: string;
             }[];
         }
         attachments: { url: string; }[];
