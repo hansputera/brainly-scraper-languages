@@ -3,7 +3,7 @@ This library retrieves data from Brainly that has been designed to avoid `403 Fo
 
 > To avoid such errors, you can fill in a valid country code according to the location of your hosting server. For example, heroku, heroku with the United States region. That is, you must fill in the code `us` as the country code inside the brainly parameter constructor.
 
-You can test the 10 languages or country codes available to see if your server hosting country location or location is rejected.
+You can test the 10 languages or country codes available to see if your server hosting country location or location is rejected. See https://github.com/hansputera/brainly-scraper-languages/blob/master/AVAILABLE_LANGUAGES.md
 
 # 💉 Installation
 - Using NPM : `npm install brainly-scraper-v2`
