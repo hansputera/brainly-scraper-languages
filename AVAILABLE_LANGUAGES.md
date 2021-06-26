@@ -8,6 +8,7 @@
 - Roman/Romania ~ If your hosting location or application location is in Roman, you can enter code `ro`.
 - Turkey ~ If your hosting location or application location is in Turkey, you can enter code `tr`.
 - Philipines (the) ~ If your hosting location or application location is in Philipine, you can enter code `ph`.
+- Poland ~ If your hosting location or application location is in Poland, you can enter code `pl`.
 - India ~ If your hosting location or application location is in India, you can enter code `hi`.
 
 # Example code
