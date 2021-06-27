@@ -42,7 +42,7 @@ export default class Brainly {
                 attachments: obj.node.attachments.map(attach => attach.url),
                 author: obj.node.author ? {
                     id: obj.node.author.databaseId,
-                    avatar_url: obj.node.author.avatar ? obj.node.author.avatar!.thumbnailUrl : undefined,
+                    avatar_url: obj.node.author.avatar ? obj.node.author.avatar!.url : undefined,
                     deleted: obj.node.author.isDeleted,
                     url: `${this.getBaseURL(language)}/app/profile/${obj.node.author.databaseId}`,
                     rank: obj.node.author.rank.name,
@@ -56,9 +56,12 @@ export default class Brainly {
                 } : undefined,
                 points: {
                     points: obj.node.points,
-                    forBest: obj.node.pointsForBest
+                    forBest: obj.node.pointsForBestAnswer
                 },
+                grade: obj.node.grade.name,
+                education: obj.node.subject.name,
                 created: obj.node.created,
+                can_be_answered: obj.node.canBeAnswered,
                 url: `${this.getBaseURL(language)}/${Util.resolveWorkName(language.toLowerCase() as LanguageList)}/${obj.node.databaseId}`
             };
 
@@ -73,7 +76,7 @@ export default class Brainly {
                   id: answerObj.author.databaseId,
                   username: answerObj.author.nick,
                   gender: answerObj.author.gender,
-                  avatar_url: answerObj.author.avatar ? answerObj.author.avatar.thumbnailUrl : undefined,
+                  avatar_url: answerObj.author.avatar ? answerObj.author.avatar.url : undefined,
                   deleted: answerObj.author.isDeleted,
                   url: `${this.getBaseURL(language.toLowerCase() as LanguageList)}/app/profile/${answerObj.author.databaseId}`,
                   description: answerObj.author.description,
@@ -104,6 +107,7 @@ export default class Brainly {
             }
         }];
     }
+
 
     private isValidLanguage(lang: LanguageList) {
         return languages.includes(lang.toLowerCase());

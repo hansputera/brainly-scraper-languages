@@ -13,6 +13,9 @@ export interface Question {
         points: number;
         forBest: number;
     }
+    grade: string;
+    education: string;
+    can_be_answered: boolean;
 }
 
 export interface Author {
@@ -50,10 +53,10 @@ export interface BrainlyResponse {
         databaseId: number;
         content: string;
         points: number;
-        pointsForBest: number;
+        pointsForBestAnswer: number;
         author: {
             avatar: {
-                thumbnailUrl: string;
+                url: string;
             } | null;
             databaseId: number;
             id: string;
@@ -68,6 +71,15 @@ export interface BrainlyResponse {
             bestAnswersCount: number;
             helpedUsersCount: number;
             gender: string;
+        }
+        canBeAnswered: boolean;
+        grade: {
+            name: string;
+            slug: string;
+        }
+        subject: {
+            name: string;
+            slug: string;
         }
         answers: {
             hasVerified: boolean;

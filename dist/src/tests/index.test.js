@@ -7,7 +7,7 @@ const index_1 = __importDefault(require("../../index"));
 it("should return information about question and answer", (done) => {
     const brain = new index_1.default("id");
     brain.search("ru", "Pythagoras").then((results) => {
-        console.log(results[0].answers);
+        console.log(results[0].question);
         expect(results).toBeDefined();
         done();
     }).catch(done);
