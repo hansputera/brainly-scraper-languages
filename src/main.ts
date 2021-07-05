@@ -9,7 +9,13 @@ export default class Brainly {
     public clientRequest = (lang: LanguageList) => Got.extend({
         prefixUrl: `${this.getBaseURL(lang)}/graphql`,
         headers: {
-            "user-agent": this.getAgent() as string
+            "user-agent": this.getAgent() as string,
+            "origin": this.getBaseURL(lang),
+            "sec-gpc": "1",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "batch": "true"
         }
     });
 
@@ -45,7 +51,7 @@ export default class Brainly {
                     avatar_url: obj.node.author.avatar ? obj.node.author.avatar!.url : undefined,
                     deleted: obj.node.author.isDeleted,
                     url: `${this.getBaseURL(language)}/app/profile/${obj.node.author.databaseId}`,
-                    rank: obj.node.author.rank.name,
+                    rank: obj.node.author.rank ? obj.node.author.rank.name : "-",
                     username: obj.node.author.nick,
                     receivedThanks: obj.node.author.receivedThanks,
                     bestAnswersCount: obj.node.author.bestAnswersCount,
@@ -84,7 +90,7 @@ export default class Brainly {
                   points: answerObj.author.points,
                   helpedUsersCount: answerObj.author.helpedUsersCount,
                   receivedThanks: answerObj.author.receivedThanks,
-                  rank: answerObj.author.rank.name
+                  rank: answerObj.author.rank ? answerObj.author.rank.name : "-"
               } : undefined
             }));
 

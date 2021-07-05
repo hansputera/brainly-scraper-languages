@@ -8,8 +8,13 @@
         "declaration": true,
         "esModuleInterop": true,
         "pretty": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/types"
+        ],
+        "baseUrl": "./src",
     },
     "exclude": ["node_modules"],
-    "include": ["src/**/*", "tests/**/*"]
+    "include": ["src/**/*.ts", "tests/**/*"]
 }

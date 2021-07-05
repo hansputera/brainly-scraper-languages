@@ -13,7 +13,13 @@ class Brainly {
     clientRequest = (lang) => got_1.default.extend({
         prefixUrl: `${this.getBaseURL(lang)}/graphql`,
         headers: {
-            "user-agent": this.getAgent()
+            "user-agent": this.getAgent(),
+            "origin": this.getBaseURL(lang),
+            "sec-gpc": "1",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "batch": "true"
         }
     });
     /**
