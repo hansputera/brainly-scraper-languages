@@ -4,8 +4,10 @@ import BrainlyError from "./error";
 import type { Answer, BaseURLObject, BrainlyResponse, CountryList, LanguageList, Question } from "./types";
 import RandomUserAgent from "random-useragent";
 import Util from "./util";
+import { version } from "../package.json";
 
 export default class Brainly {
+    public version = version;
     public clientRequest = (lang: LanguageList) => Got.extend({
         prefixUrl: `${this.getBaseURL(this.country)}/graphql`,
         headers: {
@@ -102,7 +104,7 @@ export default class Brainly {
 
             return objects;
         } catch (err) {
-            throw new Error(JSON.stringify(err));
+            throw new BrainlyError(JSON.stringify(err));
         }
     }
 
