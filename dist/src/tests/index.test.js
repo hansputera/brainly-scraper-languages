@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("../../index"));
 it("should return information about question and answer", (done) => {
-    const brain = new index_1.default("id");
-    brain.search("ru", "Pythagoras").then((results) => {
+    const brain = new index_1.default("hi");
+    brain.search("us", "Pythagoras").then((results) => {
         console.log(results[0].question);
         expect(results).toBeDefined();
         done();

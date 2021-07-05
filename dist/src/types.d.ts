@@ -1,7 +1,6 @@
-export type LanguageList = "id" | "us" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
-export type BaseURLObject = Record<LanguageList, string>;
-export type Attachments = string[];
-
+export declare type CountryList = "id" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi";
+export declare type BaseURLObject = Record<LanguageList, string>;
+export declare type Attachments = string[];
 export interface Question {
     id: number;
     content: string;
@@ -12,12 +11,11 @@ export interface Question {
     points: {
         points: number;
         forBest: number;
-    }
+    };
     grade: string;
     education: string;
     can_be_answered: boolean;
 }
-
 export interface Author {
     id: number;
     url: string;
@@ -32,7 +30,6 @@ export interface Author {
     bestAnswersCount: number;
     helpedUsersCount: number;
 }
-
 export interface Answer {
     content: string;
     attachments: Attachments;
@@ -42,11 +39,10 @@ export interface Answer {
     isBest: boolean;
     created: string;
 }
-
 export interface BrainlyResponse {
     highlight: {
         contentFragments: string[];
-    }
+    };
     node: {
         id: string;
         created: string;
@@ -71,16 +67,16 @@ export interface BrainlyResponse {
             bestAnswersCount: number;
             helpedUsersCount: number;
             gender: string;
-        }
+        };
         canBeAnswered: boolean;
         grade: {
             name: string;
             slug: string;
-        }
+        };
         subject: {
             name: string;
             slug: string;
-        }
+        };
         answers: {
             hasVerified: boolean;
             nodes: {
@@ -88,13 +84,18 @@ export interface BrainlyResponse {
                 rating: number;
                 thanksCount: number;
                 content: string;
-                attachments: { url: string; }[];
+                attachments: {
+                    url: string;
+                }[];
                 author: BrainlyResponse["node"]["author"];
                 isBest: boolean;
                 points: number;
                 created: string;
             }[];
-        }
-        attachments: { url: string; }[];
-    }
+        };
+        attachments: {
+            url: string;
+        }[];
+    };
 }
+export declare type LanguageList = CountryList | "us";

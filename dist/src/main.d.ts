@@ -1,12 +1,12 @@
-import type { Answer, LanguageList, Question } from "./types";
+import type { Answer, CountryList, LanguageList, Question } from "./types";
 export default class Brainly {
-    country: LanguageList;
+    country: CountryList;
     clientRequest: (lang: LanguageList) => import("got").Got;
     /**
      *
-     * @param country - Here, please put your application server country code, if your server are in United States. Enter region/country code `us` to this parameter. Because what? All brainly website is protected, if you do not enter valid region/country code. It will trigger an Error Exception.
+     * @param country - Here, please put your application server country code. if you do not enter valid region/country code. It will trigger an Error Exception.
      */
-    constructor(country?: LanguageList);
+    constructor(country?: CountryList);
     /**
      * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
      *
