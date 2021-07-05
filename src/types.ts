@@ -1,4 +1,4 @@
-export type LanguageList = "id" | "us" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
+export type CountryList = "id" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
 export type BaseURLObject = Record<LanguageList, string>;
 export type Attachments = string[];
 
@@ -98,3 +98,5 @@ export interface BrainlyResponse {
         attachments: { url: string; }[];
     }
 }
+
+export type LanguageList = CountryList | "us";

@@ -1,7 +1,7 @@
 # Here is available language you can use in this library
 
 - Indonesia ~ If your hosting location or application location is in Indonesia, you can enter code `id`
-- United States ~ If your hosting location or application location is in America or United States (US), you can enter code `us`.
+- ~~United States ~ If your hosting location or application location is in America or United States (US), you can enter code `us`.~~ Removed.
 - Spain ~ If your hosting location or application location is in Spain, you can enter code `es`.
 - Portuguese ~ If your hosting location or application location is in Portuguese, you can enter code `pt`.
 - Russia ~ If your hosting location or application location is in Russia, you can enter code `ru`.
