@@ -1,4 +1,4 @@
-export declare type LanguageList = "id" | "us" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi";
+export declare type CountryList = "id" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi";
 export declare type BaseURLObject = Record<LanguageList, string>;
 export declare type Attachments = string[];
 export interface Question {
@@ -98,3 +98,4 @@ export interface BrainlyResponse {
         }[];
     };
 }
+export declare type LanguageList = CountryList | "us";
