@@ -44,59 +44,11 @@ export default class Brainly {
                 json: body
             });
             const validJSON = JSON.parse(response.body)[0].data.questionSearch.edges as BrainlyResponse[];
+            
             const objects = validJSON.map(obj => {
-                const question: Question = {
-                    id: obj.node.databaseId,
-                    content: Util.clearContent(obj.node.content),
-                    attachments: obj.node.attachments.map(attach => attach.url),
-                    author: obj.node.author ? {
-                        id: obj.node.author.databaseId,
-                        avatar_url: obj.node.author.avatar ? obj.node.author.avatar!.url : undefined,
-                        deleted: obj.node.author.isDeleted,
-                        url: `${this.getBaseURL(language)}/app/profile/${obj.node.author.databaseId}`,
-                        rank: obj.node.author.rank ? obj.node.author.rank.name : "-",
-                        username: obj.node.author.nick,
-                        receivedThanks: obj.node.author.receivedThanks,
-                        bestAnswersCount: obj.node.author.bestAnswersCount,
-                        gender: obj.node.author.gender,
-                        description: obj.node.author.description,
-                        points: obj.node.author.points,
-                        helpedUsersCount: obj.node.author.helpedUsersCount
-                    } : undefined,
-                    points: {
-                        points: obj.node.points,
-                        forBest: obj.node.pointsForBestAnswer
-                    },
-                    grade: obj.node.grade.name,
-                    education: obj.node.subject.name,
-                    created: obj.node.created,
-                    can_be_answered: obj.node.canBeAnswered,
-                    url: `${this.getBaseURL(language)}/${Util.resolveWorkName(language.toLowerCase() as LanguageList)}/${obj.node.databaseId}`
-                };
+                const question: Question = Util.convertQuestion(obj.node);
 
-                const answers: Answer[] = obj.node.answers.nodes.map(answerObj => ({
-                content: Util.clearContent(answerObj.content),
-                attachments: answerObj.attachments.map(attach => attach.url),
-                rates: answerObj.ratesCount,
-                rating: answerObj.rating,
-                isBest: answerObj.isBest,
-                created: answerObj.created,
-                author: answerObj.author ? {
-                    id: answerObj.author.databaseId,
-                    username: answerObj.author.nick,
-                    gender: answerObj.author.gender,
-                    avatar_url: answerObj.author.avatar ? answerObj.author.avatar.url : undefined,
-                    deleted: answerObj.author.isDeleted,
-                    url: `${this.getBaseURL(language.toLowerCase() as LanguageList)}/app/profile/${answerObj.author.databaseId}`,
-                    description: answerObj.author.description,
-                    bestAnswersCount: answerObj.author.bestAnswersCount,
-                    points: answerObj.author.points,
-                    helpedUsersCount: answerObj.author.helpedUsersCount,
-                    receivedThanks: answerObj.author.receivedThanks,
-                    rank: answerObj.author.rank ? answerObj.author.rank.name : "-"
-                } : undefined
-                }));
-
+                const answers: Answer[] = obj.node.answers.nodes.map(answerObj => Util.convertAnswer(answerObj));
                 return {
                     question, answers
                 }
@@ -104,7 +56,7 @@ export default class Brainly {
 
             return objects;
         } catch (err) {
-            throw new BrainlyError(JSON.stringify(err));
+            throw new BrainlyError(err);
         }
     }
 
@@ -113,8 +65,7 @@ export default class Brainly {
             operationName: "SearchQuery",
             query: graphql_query,
             variables: {
-                after: null,
-                first: length,
+                len: length,
                 query: question
             }
         }];
