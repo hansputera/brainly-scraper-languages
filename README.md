@@ -1,4 +1,5 @@
-# Brainly Scraper V2
+![brainly-scraper-languages](https://socialify.git.ci/hansputera/brainly-scraper-languages/image?description=1&forks=1&issues=1&language=1&logo=https%3A%2F%2Fstyleguide.brainly.com%2Fimages%2Flogos%2Fbrainly-mobile-6879551770.svg&owner=1&pulls=1&stargazers=1&theme=Light)
+
 This library retrieves data from Brainly that has been designed to avoid `403 Forbidden` exception.
 
 > To avoid such errors, you can fill in a valid country code. You can test the 10 languages or country codes available to see if your server hosting country location or location is rejected.
