@@ -1,4 +1,4 @@
-![brainly-scraper-languages](https://socialify.git.ci/hansputera/brainly-scraper-languages/image?description=1&font=Raleway&forks=1&issues=1&language=1&logo=https%3A%2F%2Fstyleguide.brainly.co.id%2Fimages%2Fapp-icons%2Fbrainly%2F120x120-2a11207040.png&owner=1&pulls=1&stargazers=1&theme=Light)
+![brainly-scraper-languages](https://socialify.git.ci/hansputera/brainly-scraper-languages/image?description=1&font=Raleway&forks=1&issues=1&language=1&owner=1&pulls=1&stargazers=1&theme=Light)
 
 This library retrieves data from Brainly that has been designed to avoid `403 Forbidden` exception.
 
