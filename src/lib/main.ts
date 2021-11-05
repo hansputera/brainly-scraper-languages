@@ -85,7 +85,6 @@ export class Brainly {
                 "Sec-Fetch-Mode": "cors",
                 "Sec-Fetch-Site": "same-origin",
                 "TE": "trailers",
-                "X-B-Token-Long": "GMtRm8OLO64dtNudpVNa03Vs2yhe_vQ3j1jsqx_TFdY="
             }
         });
     }
