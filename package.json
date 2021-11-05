@@ -1,27 +1,28 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "2.0.4-1",
+  "version": "2.0.5",
   "description": "A library that makes it easy to retrieve data from brainly sites.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
   "scripts": {
+    "clean": "rimraf build",
     "test": "jest",
-    "build": "tsc --build tsconfig.json"
+    "test:manual": "npm run build && node ./build/src/test",
+    "build": "npm run clean && tsc --build tsconfig.json"
   },
   "author": "Hanif",
   "license": "MIT",
   "dependencies": {
-    "got": "^11.8.2",
-    "random-useragent": "^0.5.0"
+    "axios": "^0.24.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.14.5",
     "@types/jest": "^26.0.23",
-    "@types/random-useragent": "^0.3.0",
     "babel-jest": "^27.0.5",
     "jest": "^27.0.5",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "typescript": "^4.3.4"
   },
@@ -32,7 +33,12 @@
   "maintainers": [
     "hansputera"
   ],
-  "keywords": ["brainly", "brainly scrape", "brainly-scraper", "brainlys"],
+  "keywords": [
+    "brainly",
+    "brainly scrape",
+    "brainly-scraper",
+    "brainlys"
+  ],
   "engines": {
     "node": ">=12.x"
   }

@@ -1,4 +1,5 @@
-import type { Answer, Author, AuthorQuestionData, Comment, LanguageList, OriginalAnswer, OriginalAuthor, OriginalComment, OriginalQuestionAndSimilar, Question } from "./types";
+import UAS from "../assets/useragents.json";
+import type { Answer, Author, AuthorQuestionData, Comment, LanguageList, OriginalAnswer, OriginalAuthor, OriginalComment, OriginalQuestionAndSimilar, Question, WorkType } from "./types";
 
 export default class Util {
     static clearContent(text: string) {
@@ -6,13 +7,18 @@ export default class Util {
         return text.replace(/(<br?\s?\/>)/ig, " \n").replace(/(<([^>]+)>)/ig, "").replace(regex, "").replace(/&gt;/gi, "");
     }
 
-    static resolveWorkName(lang: LanguageList) {
+    static getRandomUA(): string {
+        return UAS[Math.floor(Math.random() * UAS.length)];
+    }
+
+    static resolveWorkName(lang: LanguageList): WorkType {
         switch(lang) {
             case "id":
                 return "tugas";
             case "us":
             case "hi":
             case "ph":
+            default:
                 return "question";
             case "pl":
                 return "zadanie";
@@ -26,8 +32,6 @@ export default class Util {
                 return "tema";
             case "ru":
                 return "task";
-            default:
-                return "question";
         }
     }
 
@@ -81,7 +85,7 @@ export default class Util {
 
     public static convertComment(comment: OriginalComment) {
         const expectedObject: Comment = {
-            content: comment.content,
+            content: this.clearContent(comment.content),
             author: comment.author,
             id: comment.databaseId,
             deleted: comment.deleted
@@ -92,7 +96,7 @@ export default class Util {
 
     public static convertAnswer(answer: OriginalAnswer) {
         const expectedObject: Answer = {
-            content: answer.content,
+            content: this.clearContent(answer.content),
             author: answer.author ? this.convertAuthor(answer.author) : undefined,
             isBest: answer.isBest,
             points: answer.points,
@@ -115,7 +119,7 @@ export default class Util {
     public static convertQuestion(question: OriginalQuestionAndSimilar) {
         const expectedObject: Question = {
             id: question.databaseId,
-            content: question.content,
+            content: this.clearContent(question.content),
             closed: question.isClosed,
             created: {
                 iso: question.created,
