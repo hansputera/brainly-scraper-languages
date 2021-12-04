@@ -2,7 +2,7 @@ import { baseURLs, graphql_query, languages } from "./config";
 import { Answer, BaseURLObject, CountryList, JsonRes, LanguageList, Question } from "./types";
 import Util from "./util";
 import { version } from "../../package.json";
-import { FetcherClient, CheckLatestVersion } from "./fetcher";
+import { FetcherClient } from "./fetcher";
 
 export class Brainly {
     /**
@@ -75,8 +75,6 @@ export class Brainly {
     public getBaseURL(country: CountryList): string {
         return (baseURLs as BaseURLObject)[country];
     }
-
-    public checkVersion = CheckLatestVersion;
 
     /**
      * Find passed brainly site.
