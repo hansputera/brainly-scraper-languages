@@ -1,16 +1,20 @@
 {
   "name": "brainly-scraper-v2",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A library that makes it easy to retrieve data from brainly sites.",
-  "main": "./build/src/lib/index.js",
-  "types": "./build/src/lib/index.d.ts",
+  "main": "./build/src/lib/main.js",
+  "types": "./build/src/lib/main.d.ts",
   "scripts": {
     "clean": "rimraf build",
     "test": "jest",
     "test:manual": "npm run build && node ./build/src/test",
     "build": "npm run clean && tsc --build tsconfig.json"
   },
-  "author": "Hanif",
+  "author": {
+      "name": "Hanif Dwy Putra S",
+      "email": "hanifdwyputrasembiring@gmail.com",
+      "url": "https://thehanifs.tech"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.24.0"
