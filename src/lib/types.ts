@@ -1,6 +1,15 @@
-export type CountryList = "id" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
+export type WorkType = "tugas" | "question" | "zadanie" | "tarefa" | "tarea" | "gorev" | "tema" | "task";
+export type CountryList = "id" | "us" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
 export type BaseURLObject = Record<LanguageList, string>;
 export type Attachments = string[];
+
+export type JsonRes = {
+    data: {
+        questionSearch: {
+            edges: BrainlyResponse[];
+        }
+    }
+}[];
 
 export interface Question {
     id: number;
@@ -227,4 +236,4 @@ export interface BrainlyResponse {
     node: OriginalQuestionAndSimilar;
 }
 
-export type LanguageList = CountryList | "us";
+export type LanguageList = CountryList;

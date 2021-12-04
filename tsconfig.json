@@ -9,9 +9,9 @@
         "esModuleInterop": true,
         "pretty": true,
         "skipLibCheck": true,
-        "baseUrl": "./src",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "removeComments": true
     },
-    "exclude": ["node_modules", "build"],
-    "include": ["src/**/*.ts", "tests/**/*"]
+    "exclude": ["node_modules", "build", "src/**/*.test.ts", "src/**/test.ts"],
+    "include": ["src/**/*"]
 }
