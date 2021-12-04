@@ -2,23 +2,24 @@ import { baseURLs, graphql_query, languages } from "./config";
 import { Answer, BaseURLObject, CountryList, JsonRes, LanguageList, Question } from "./types";
 import Util from "./util";
 import { version } from "../../package.json";
-import { FetcherClient } from "./fetcher";
-import { Rotator } from "./rotator";
+import { FetcherClient, CheckLatestVersion } from "./fetcher";
 
 export class Brainly {
+    /**
+     * Package version
+     */
     public version = version;
     /**
-     * Brainly rotator
+     * Passed countries
      */
-    public rotator = new Rotator(this);
+    public passedCountries: string[] = [];
 
     /**
      * 
      * @param country - Here, please put your application server country code. if you do not enter valid region/country code. It will trigger an Error Exception.
      */
-    constructor(private rotateCountry = false, public country: CountryList = "id") {
+    constructor(public country: CountryList = "id") {
         if (!this.isValidLanguage(country)) throw new TypeError("Please put valid country!");
-        else if (!rotateCountry && !country) throw new TypeError('If rotate country is disabled, you must set country manually!');
     }
 
     /**
@@ -32,7 +33,7 @@ export class Brainly {
         try {
             if (!this.isValidLanguage(language)) throw new TypeError("Please put valid language!");
             const body = this.getRequestParams(question, length);
-            const response = await this.client(language.toLowerCase() as LanguageList).post(`graphql/${language.toLowerCase()}`, body);
+            const response = await this.client(this.country).post(`graphql/${language.toLowerCase()}`, body);
             const json = response.data as JsonRes;
             const validJSON = json[0].data.questionSearch.edges;
             
@@ -69,18 +70,49 @@ export class Brainly {
     /**
      * This function will return brainly site url from your country selection in the constructor
      * 
-     * @returns {String} - A base url of your country selection
+     * @returns {String} country - A base url of your country selection
      */
-    public getBaseURL(lang: LanguageList): string {
-        return (baseURLs as BaseURLObject)[lang];
+    public getBaseURL(country: CountryList): string {
+        return (baseURLs as BaseURLObject)[country];
     }
 
-    private client(lang: LanguageList) {
-        return FetcherClient(this.getBaseURL(lang), {
+    public checkVersion = CheckLatestVersion;
+
+    /**
+     * Find passed brainly site.
+     * @param {boolean} debug
+     * @return {Promise<string[]}
+     */
+    public async findPassedCountries(debug: boolean = false): Promise<string[]> {
+        for (const lang of languages) {
+            try {
+                const response = await this.client(lang as CountryList)
+                    .post('graphql/id', this.getRequestParams('pythagoras', 10));
+
+                if (typeof response.data !== 'object') {
+                    throw new Error('Response isn\'t an object');
+                } else {
+                    if (debug) console.log(lang, 'passed');
+                    this.passedCountries.push(lang);
+                }
+            } catch (e) {
+                if (debug) console.log(lang, (e as Error).message);
+                if (this.passedCountries.includes(lang)) {
+                    this.passedCountries = this.passedCountries
+                        .filter((l) => lang !== l);
+                }
+            }
+        }
+
+        return this.passedCountries;
+    }
+
+    private client(country: CountryList) {
+        return FetcherClient(this.getBaseURL(country), {
             headers: {
                 "User-Agent": Util.getRandomUA(),
-                "Origin": this.getBaseURL(lang),
-                "Referer": this.getBaseURL(lang),
+                "Origin": this.getBaseURL(country),
+                "Referer": this.getBaseURL(country),
                 "Sec-Fetch-Dest": "empty",
                 "Sec-Fetch-Mode": "cors",
                 "Sec-Fetch-Site": "same-origin",

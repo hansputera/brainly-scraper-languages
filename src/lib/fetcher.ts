@@ -1,11 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { name as PkgName, version as PkgVersion } from "../../package.json";
 
-interface Pkg {
-    "dist-tags": {
-        latest: string;
-    }
-}
 export const FetcherClient = (prefixUrl: string, options?: AxiosRequestConfig) => axios.create(
     {
         baseURL: prefixUrl, ...options,
