@@ -1,9 +1,14 @@
+import type { AxiosRequestConfig } from "axios";
 import { baseURLs, graphql_query, languages } from "./config";
 import { Answer, BaseURLObject, CountryList, JsonRes, LanguageList, Question } from "./types";
-import Util from "./util";
-import { version } from "../../package.json";
 import { FetcherClient } from "./fetcher";
 
+import Util from "./util";
+import { version } from "../../package.json";
+
+/**
+ * @class Brainly - Brainly instance
+ */
 export class Brainly {
     /**
      * Package version
@@ -28,12 +33,13 @@ export class Brainly {
      * @param language What language want to search?
      * @param question A question you want to search. Example: `Pythagoras theory`
      * @param length Length array from question list
+     * @param options Custom Axios request options
      */
-    public async search(language: LanguageList = "id", question: string, length = 10) {
+    public async search(language: LanguageList = "id", question: string, length = 10, options?: AxiosRequestConfig) {
         try {
             if (!this.isValidLanguage(language)) throw new TypeError("Please put valid language!");
             const body = this.getRequestParams(question, length);
-            const response = await this.client(this.country).post(`graphql/${language.toLowerCase()}`, body);
+            const response = await this.client(this.country).post(`graphql/${language.toLowerCase()}`, body, options);
             const json = response.data as JsonRes;
             const validJSON = json[0].data.questionSearch.edges;
             
