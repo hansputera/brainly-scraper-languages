@@ -119,3 +119,5 @@ export class Brainly {
         });
     }
 }
+
+export default Brainly;
