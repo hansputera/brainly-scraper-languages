@@ -12,6 +12,6 @@
         "resolveJsonModule": true,
         "removeComments": true
     },
-    "exclude": ["node_modules", "build", "src/tests"],
+    "exclude": ["node_modules", "build", "src/**/*.test.ts", "src/**/test.ts"],
     "include": ["src/**/*"]
 }
