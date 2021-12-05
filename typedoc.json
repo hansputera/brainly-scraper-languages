@@ -3,8 +3,10 @@
     "out": "docs",
     "includeVersion": true,
     "exclude": [
-        "**/*.json"
+        "**/*.json",
+        "**/test.*"
     ],
     "name": "Brainly Scraper V2",
-    "pretty": true
+    "pretty": true,
+    "categorizeByGroup": true
 }

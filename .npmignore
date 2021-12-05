@@ -4,3 +4,6 @@ src/**/*
 yarn.lock
 AVAILABLES_LANGUAGES.md
 docs
+docs-pages
+typedoc.json
+tsconfig.json
