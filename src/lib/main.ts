@@ -1,127 +1,200 @@
-import type { AxiosRequestConfig } from "axios";
-import { baseURLs, graphql_query, languages } from "./config";
-import { Answer, BaseURLObject, CountryList, JsonRes, LanguageList, Question } from "./types";
-import { FetcherClient } from "./fetcher";
+import Piscina from 'piscina';
+import Path from 'path';
+import type {AxiosRequestConfig, AxiosInstance} from 'axios';
+import {baseURLs, graphqlQuery, languages} from './config';
+import {
+  Answer, BaseURLObject,
+  CountryList, LanguageList,
+  Question,
+} from './types';
+import {fetcherClient} from './fetcher';
 
-import Util from "./util";
-import { version } from "../../package.json";
+import Util from './util';
+import {Cache} from './cache';
+import {version} from '../../package.json';
 
 /**
- * @class Brainly - Brainly instance
+ * @class Brainly
  */
 export class Brainly {
-    /**
+  /**
      * Package version
      */
-    public version = version;
-    /**
+  public version = version;
+  /**
      * Passed countries
      */
-    public passedCountries: string[] = [];
+  public passedCountries: string[] = [];
 
-    /**
-     * 
-     * @param country - Here, please put your application server country code. if you do not enter valid region/country code. It will trigger an Error Exception.
+  /**
+     * Brainly worker (w/ Piscina)
      */
-    constructor(public country: CountryList = "id") {
-        if (!this.isValidLanguage(country)) throw new TypeError("Please put valid country!");
-    }
+  private worker = new Piscina({
+    'filename': Path.resolve(__dirname, 'worker.js'),
+    'maxThreads': 30,
+  });
 
-    /**
+  /**
+     * Brainly cache
+     */
+  public cache = new Cache();
+
+  /**
+     *
+     * @param {LanguageList?} country - Here, please put your application server country code. if you do not enter valid region/country code. It will trigger an Error Exception.
+     */
+  constructor(public country: CountryList = 'id') {
+    if (!Brainly.isValidLanguage(country)) {
+      throw new TypeError('Please put valid country!');
+    }
+  }
+
+  /**
      * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
-     * 
-     * @param language What language want to search?
-     * @param question A question you want to search. Example: `Pythagoras theory`
-     * @param length Length array from question list
-     * @param options Custom Axios request options
+     *
+     * @description This method based on constructor country code.
+     * @param {LanguageList} language What language want to search?
+     * @param {string} question A question you want to search. Example: `Pythagoras theory`
+     * @param {number} length Length array from question list
+     * @param {AxiosRequestConfig?} options Custom Axios request options
+     *
+     * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
-    public async search(language: LanguageList = "id", question: string, length = 10, options?: AxiosRequestConfig) {
-        try {
-            if (!this.isValidLanguage(language)) throw new TypeError("Please put valid language!");
-            const body = this.getRequestParams(question, length);
-            const response = await this.client(this.country).post(`graphql/${language.toLowerCase()}`, body, options);
-            const json = response.data as JsonRes;
-            const validJSON = json[0].data.questionSearch.edges;
-            
-            const objects = validJSON.map(obj => {
-                const question: Question = Util.convertQuestion(obj.node);
+  public async search(
+      language: LanguageList = 'id',
+      question: string,
+      length: number = 10,
+      options?: AxiosRequestConfig):
+        Promise<{ question: Question; answers: Answer[]; }[]> {
+    try {
+      if (this.cache.has(language, question.toLowerCase())) {
+        return this.cache.get(language, question.toLowerCase()) as {
+            question: Question;
+            answers: Answer[];
+        }[];
+      }
+      const result = await this.worker.run({
+        'c': this.country.toLowerCase(),
+        'question': question,
+        'length': length,
+        'options': options,
+        'language': language,
+      }, {
+        'name': 'search',
+      });
 
-                const answers: Answer[] = obj.node.answers.nodes.map(answerObj => Util.convertAnswer(answerObj));
-                return {
-                    question, answers
-                }
-            });
-
-            return objects;
-        } catch (err) {
-            throw new TypeError(err as string);
-        }
+      if (result.err) {
+        throw new Error(result.err as string);
+      } else {
+        this.cache.set(language, question, result);
+        return result as {
+                    question: Question;
+                    answers: Answer[];
+                }[];
+      }
+    } catch (err) {
+      throw new Error(err as string);
     }
+  }
 
-    private getRequestParams(question: string, length = 10) {
-        return [{
-            operationName: 'SearchQuery',
-            query: graphql_query,
-            variables: {
-                len: length,
-                query: question,
-            }
-        }];
-    }
+  /**
+     * @param {string} question
+     * @param {number} length
+     *
+     * @return {{operationName: string, query: string, variables: { len: number, query: string }}[]}
+     */
+  static getRequestParams(question: string, length: number = 10):
+    { operationName: string;
+        query: string; variables:
+            { len: number; query: string; }; }[] {
+    return [{
+      operationName: 'SearchQuery',
+      query: graphqlQuery,
+      variables: {
+        len: length,
+        query: question,
+      },
+    }];
+  }
 
 
-    private isValidLanguage(lang: LanguageList) {
-        return languages.includes(lang.toLowerCase()) && typeof lang === "string";
-    }
-    /**
+  /**
+     * @param {LanguageList} lang
+     * @return {boolean}
+     */
+  static isValidLanguage(lang: LanguageList): boolean {
+    return languages.includes(lang.toLowerCase()) && typeof lang === 'string';
+  }
+
+  /**
      * This function will return brainly site url from your country selection in the constructor
-     * 
-     * @returns {String} country - A base url of your country selection
+     *
+     * @param {CountryList} country - A base url of your country selection
+     * @return {string}
      */
-    public getBaseURL(country: CountryList): string {
-        return (baseURLs as BaseURLObject)[country];
-    }
+  static getBaseURL(country: CountryList): string {
+    return (baseURLs as BaseURLObject)[country];
+  }
 
-    /**
-     * Find passed brainly site.
-     * @param {boolean} debug
-     * @return {Promise<string[]}
+  /**
+     * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
+     *
+     * @param {LanguageList} language What language want to search?
+     * @param {string} question A question you want to search. Example: `Pythagoras theory`
+     * @param {number} length Length array from question list
+     * @param {AxiosRequestConfig?} options Custom Axios request options
+     *
+     * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
-    public async findPassedCountries(debug: boolean = false): Promise<string[]> {
-        for (const lang of languages) {
-            try {
-                const response = await this.client(lang as CountryList)
-                    .post('graphql/id', this.getRequestParams('pythagoras', 10));
-
-                if (typeof response.data !== 'object') {
-                    throw new Error('Response isn\'t an object');
-                } else {
-                    if (debug) console.log(lang, 'passed');
-                    this.passedCountries.push(lang);
-                }
-            } catch (e) {
-                if (debug) console.log(lang, (e as Error).message);
-                if (this.passedCountries.includes(lang)) {
-                    this.passedCountries = this.passedCountries
-                        .filter((l) => lang !== l);
-                }
-            }
-        }
-
-        return this.passedCountries;
+  public async searchWithMT(
+      language: LanguageList = 'id',
+      question: string,
+      length: number = 10,
+      options?: AxiosRequestConfig):
+        Promise<{ question: Question; answers: Answer[]; }[]> {
+    if (this.cache.has(language, question.toLowerCase())) {
+      return this.cache.get(language, question.toLowerCase()) as {
+                    question: Question;
+                    answers: Answer[];
+                }[];
     }
-
-    private client(country: CountryList) {
-        return FetcherClient(this.getBaseURL(country), {
-            headers: {
-                "User-Agent": Util.getRandomUA(),
-                "Origin": this.getBaseURL(country),
-                "Referer": this.getBaseURL(country),
-                "Sec-Fetch-Dest": "empty",
-                "Sec-Fetch-Mode": "cors",
-                "Sec-Fetch-Site": "same-origin",
-                "TE": "trailers",
-            }
+    return await new Promise((resolve) => {
+      let shouldReturn = true;
+      languages.every((l) => {
+        this.worker.run({
+          'c': l,
+          'language': language,
+          'question': question,
+          'length': length,
+          'options': options,
+        }, {'name': 'search'}).then((d) => {
+          if (!d.err) {
+            shouldReturn = false;
+            this.cache.set(language, question.toLowerCase(), d);
+            resolve(d);
+          }
         });
-    }
+
+        return shouldReturn;
+      });
+    });
+  }
+
+  /**
+   * @param {CountryList} country
+   * @return {AxiosInstance}
+   */
+  static client(country: CountryList): AxiosInstance {
+    return fetcherClient(Brainly.getBaseURL(country), {
+      headers: {
+        'User-Agent': Util.getRandomUA(),
+        'Origin': Brainly.getBaseURL(country),
+        'Referer': Brainly.getBaseURL(country),
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'TE': 'trailers',
+      },
+    });
+  }
 }
