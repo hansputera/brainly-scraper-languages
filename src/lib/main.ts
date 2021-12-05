@@ -58,6 +58,10 @@ export class Brainly {
      * @param {number} length Length array from question list
      * @param {AxiosRequestConfig?} options Custom Axios request options
      *
+     * Example:
+     * ```ts
+     *  brain.search('id', 'Pythagoras', 10).then(console.log);
+     * ```
      * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
   public async search(
@@ -98,8 +102,9 @@ export class Brainly {
   }
 
   /**
-     * @param {string} question
-     * @param {number} length
+     * Get body request to sent.
+     * @param {string} question - A question
+     * @param {number} length - How much items you want to receive.
      *
      * @return {{operationName: string, query: string, variables: { len: number, query: string }}[]}
      */
@@ -119,7 +124,8 @@ export class Brainly {
 
 
   /**
-     * @param {LanguageList} lang
+     * Validate language code based available languages.
+     * @param {LanguageList} lang - A Language want to validate.
      * @return {boolean}
      */
   static isValidLanguage(lang: LanguageList): boolean {
@@ -139,11 +145,16 @@ export class Brainly {
   /**
      * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
      *
+     * @description - You can use this method if you won't receive 403 forbidden.
      * @param {LanguageList} language What language want to search?
      * @param {string} question A question you want to search. Example: `Pythagoras theory`
      * @param {number} length Length array from question list
      * @param {AxiosRequestConfig?} options Custom Axios request options
      *
+     * Example:
+     * ```ts
+     *  brain.searchWithMT('id', 'Pythagoras', 10).then(console.log);
+     * ```
      * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
   public async searchWithMT(
@@ -181,7 +192,8 @@ export class Brainly {
   }
 
   /**
-   * @param {CountryList} country
+   * Create axios instance.
+   * @param {CountryList} country - Country code.
    * @return {AxiosInstance}
    */
   static client(country: CountryList): AxiosInstance {
