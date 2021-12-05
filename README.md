@@ -15,7 +15,7 @@ See https://github.com/hansputera/brainly-scraper-languages/blob/master/AVAILABL
 
 - Code
 ```js
-const Brainly = require("brainly-scraper-v2");
+const { Brainly } = require("brainly-scraper-v2");
 const brain = new Brainly("id"); // 'id' - Default to 'id'
 
 brain.search("es", "Pythagoras").then(console.log).catch(console.error);
