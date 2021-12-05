@@ -6,8 +6,7 @@
   "types": "./build/src/index.d.ts",
   "scripts": {
     "clean": "rimraf build",
-    "test": "jest",
-    "test:manual": "npm run build && node ./build/src/test",
+    "test": "npm run build && node ./build/src/test",
     "build": "npm run clean && tsc --build tsconfig.json",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "prepare": "husky install"
