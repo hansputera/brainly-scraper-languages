@@ -1,5 +1,21 @@
-export type WorkType = "tugas" | "question" | "zadanie" | "tarefa" | "tarea" | "gorev" | "tema" | "task";
-export type CountryList = "id" | "us" | "es" | "ru" | "ro" | "pt" | "tr" | "ph" | "pl" | "hi"; 
+export type WorkType = 'tugas'
+                    | 'question'
+                    | 'zadanie'
+                    | 'tarefa'
+                    | 'tarea'
+                    | 'gorev'
+                    | 'tema'
+                    | 'task';
+export type CountryList = 'id'
+                    | 'us'
+                    | 'es'
+                    | 'ru'
+                    | 'ro'
+                    | 'pt'
+                    | 'tr'
+                    | 'ph'
+                    | 'pl'
+                    | 'hi';
 export type BaseURLObject = Record<LanguageList, string>;
 export type Attachments = string[];
 
@@ -29,7 +45,7 @@ export interface Question {
     grade: string;
     lastActivity?: string;
     verifiedAnswer: boolean;
-    answers: Answer[];   
+    answers: Answer[];
 }
 
 export interface Answer {
@@ -50,7 +66,7 @@ export interface Answer {
 
 export interface Comment {
     id: number;
-    author?: OriginalComment["author"];
+    author?: OriginalComment['author'];
     content: string;
     deleted?: boolean;
 }
@@ -204,7 +220,7 @@ export interface Author {
         count: number;
         InLast30Days: number;
     }
-    answerStreak?: OriginalAuthor["answeringStreak"];
+    answerStreak?: OriginalAuthor['answeringStreak'];
     questions: {
         count: number;
         data: AuthorQuestionData[];

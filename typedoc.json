@@ -1,0 +1,10 @@
+{
+    "entryPoints": ["./src"],
+    "out": "docs",
+    "includeVersion": true,
+    "exclude": [
+        "**/*.json"
+    ],
+    "name": "Brainly Scraper V2",
+    "pretty": true
+}

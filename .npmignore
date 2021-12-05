@@ -1,2 +1,6 @@
 node_modules
 src/**/*
+.eslintrc.json
+yarn.lock
+AVAILABLES_LANGUAGES.md
+docs

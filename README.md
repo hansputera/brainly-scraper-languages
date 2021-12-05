@@ -14,13 +14,16 @@ See https://github.com/hansputera/brainly-scraper-languages/blob/master/AVAILABL
 > WARNING:  Make sure the country code you entered in the constructor is correct.
 
 - Code
+
 ```js
-const Brainly = require("brainly-scraper-v2");
+const { Brainly } = require("brainly-scraper-v2");
 const brain = new Brainly("id"); // 'id' - Default to 'id'
 
 brain.search("es", "Pythagoras").then(console.log).catch(console.error);
 ```
+
 - Output
+
 ```json
 [
     {
