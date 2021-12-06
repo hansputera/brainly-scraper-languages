@@ -21,10 +21,6 @@ export class Brainly {
      * Package version
      */
   public version = version;
-  /**
-     * Passed countries
-     */
-  public passedCountries: string[] = [];
 
   /**
      * Brainly worker (w/ Piscina)
@@ -169,7 +165,7 @@ export class Brainly {
                     answers: Answer[];
                 }[];
     }
-    return await new Promise((resolve) => {
+    return await new Promise((resolve, reject) => {
       let shouldReturn = true;
       languages.every((l) => {
         this.worker.run({
@@ -188,6 +184,10 @@ export class Brainly {
 
         return shouldReturn;
       });
+
+      reject(
+          new Error('No Result. May gets blocked'),
+      );
     });
   }
 

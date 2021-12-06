@@ -51,6 +51,6 @@ export class Cache {
      * @return {boolean}
      */
   has(l: LanguageList, q: string): boolean {
-    return !!this.raws.has({lang: l, q});
+    return this.raws.has({lang: l, q});
   }
 }
