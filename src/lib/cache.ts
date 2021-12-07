@@ -1,17 +1,27 @@
+import os from 'os';
+import fs from 'fs';
+
 import type {Question, Answer, LanguageList} from './types';
+
+type CacheResult = Record<LanguageList, Record<string, {
+    question: Question;
+    answers: Answer[];
+}[]>>;
 
 /**
  * @class Cache
  */
 export class Cache {
-  private raws: Map<{
-        lang: LanguageList;
-        q: string;
-    }, {
-        question: Question;
-        answers: Answer[];
-    }[]> = new Map();
+  private temporaryPath = os.tmpdir() + '/brainly-scraper2-cache.json';
 
+  /**
+   * Cache constructor
+   */
+  constructor() {
+    if (!fs.existsSync(this.temporaryPath)) {
+      fs.writeFileSync(this.temporaryPath, JSON.stringify({}));
+    }
+  }
 
   /**
      * @param {LanguageList} l
@@ -20,7 +30,11 @@ export class Cache {
      */
   get(l: LanguageList, q: string):
     { question: Question; answers: Answer[]; }[] | undefined {
-    return this.raws.get({lang: l, q});
+    if (!this.has(l, q.toLowerCase())) {
+      return undefined;
+    }
+
+    return this.json()[l][q.toLowerCase()];
   }
 
   /**
@@ -32,16 +46,17 @@ export class Cache {
      */
   set(l: LanguageList, q: string, res:
         { question: Question; answers: Answer[]; }[]): void {
-    this.raws.set({lang: l, q}, res);
-  }
+    if (this.has(l, q.toLowerCase())) return;
 
-  /**
-   * Free the cache
-   *
-   * @return {void}
-   */
-  free(): void {
-    this.raws.clear();
+    const d = this.json();
+    d[l] = {
+      ...d[l],
+      [q.toLowerCase()]: res,
+    };
+
+    fs.writeFileSync(this.temporaryPath, JSON.stringify(
+        d,
+    ));
   }
 
   /**
@@ -51,6 +66,40 @@ export class Cache {
      * @return {boolean}
      */
   has(l: LanguageList, q: string): boolean {
-    return !!this.raws.has({lang: l, q});
+    const d = this.json();
+    if (d[l] && d[l][q.toLowerCase()]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Get collected question from a language code.
+   * @param {LanguageList} lang - A language code
+   *
+   * @return {Record<string, { question: Question, answers: Answer[]}[]>}
+   */
+  getQuestionsByLang(lang: LanguageList): Record<string, {
+      question: Question;
+      answers: Answer[];
+  }[]> {
+    return this.json()[lang];
+  }
+
+  /**
+   * Return a cache data
+   * @return {CacheResult}
+   */
+  public json(): CacheResult {
+    if (fs.existsSync(this.temporaryPath)) {
+      try {
+        const data = fs.readFileSync(this.temporaryPath,
+            'utf8');
+        return JSON.parse(data);
+      } catch {
+        return {} as CacheResult;
+      }
+    } else return {} as CacheResult;
   }
 }

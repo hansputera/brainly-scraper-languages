@@ -10,5 +10,7 @@ export const baseURLs = {
   ph: 'https://brainly.ph',
   pl: 'https://brainly.pl',
   hi: 'https://brainly.in',
+  fr: 'https://nosdevoirs.fr',
 };
+
 export const languages = Object.keys(baseURLs);

@@ -21,10 +21,6 @@ export class Brainly {
      * Package version
      */
   public version = version;
-  /**
-     * Passed countries
-     */
-  public passedCountries: string[] = [];
 
   /**
      * Brainly worker (w/ Piscina)
