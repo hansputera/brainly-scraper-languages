@@ -31,9 +31,9 @@ export class Brainly {
   });
 
   /**
-     * Brainly cache
+     * Brainly cache.
      */
-  public cache = new Cache();
+  public cache!: Cache;
 
   /**
      *
@@ -159,13 +159,15 @@ export class Brainly {
       length: number = 10,
       options?: AxiosRequestConfig):
         Promise<{ question: Question; answers: Answer[]; }[]> {
+    this.cache = this.cache instanceof Cache ? this.cache : new Cache();
+
     if (this.cache.has(language, question.toLowerCase())) {
       return this.cache.get(language, question.toLowerCase()) as {
                     question: Question;
                     answers: Answer[];
                 }[];
     }
-    return await new Promise((resolve) => {
+    return await new Promise((resolve, reject) => {
       let shouldReturn = true;
       languages.every((l) => {
         this.worker.run({
@@ -184,6 +186,9 @@ export class Brainly {
 
         return shouldReturn;
       });
+
+      reject(new Error('Try again! May you are getting blocked from ' +
+'brainly sites, or the result data is empty')); // Blocked requests or empty result.
     });
   }
 

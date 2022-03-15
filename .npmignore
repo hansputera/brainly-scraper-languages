@@ -7,3 +7,5 @@ docs
 docs-pages
 typedoc.json
 tsconfig.json
+build/**/test.*
+.yarn/
