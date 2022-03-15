@@ -31,9 +31,9 @@ export class Brainly {
   });
 
   /**
-     * Brainly cache
+     * Brainly cache.
      */
-  public cache = new Cache();
+  public cache!: Cache;
 
   /**
      *
@@ -159,6 +159,8 @@ export class Brainly {
       length: number = 10,
       options?: AxiosRequestConfig):
         Promise<{ question: Question; answers: Answer[]; }[]> {
+    this.cache = this.cache instanceof Cache ? this.cache : new Cache();
+
     if (this.cache.has(language, question.toLowerCase())) {
       return this.cache.get(language, question.toLowerCase()) as {
                     question: Question;
