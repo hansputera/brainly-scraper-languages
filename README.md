@@ -59,12 +59,5 @@ brain.search('es', "Pythagoras").then(console.log).catch(console.error);
 # ⚙️ Issues and Bugs
 If you have problems using this library, you can create an issue in the [github repository](https://github.com/hansputera/brainly-scraper-languages). Remember, don't forget to read the instructions and try.
 
-# 🔬 Hosting testing
-## Replit.com
-Free and paid hosting replit already tested. The country codes that pass are Indonesia, Spain, India, Portuguese, and Philipines.
-
-
-Ever tried and tested on other hosting? Please send us your feedback in PR. That would be very helpful 😊.
-
 # ✍️ Contributions
 Do you want to contribute with this library for the better? Very well, fork this [github repository](https://github.com/hansputera/brainly-scraper-languages) then install dependencies to your directory. Happy coding 😁
