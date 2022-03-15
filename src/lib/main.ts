@@ -165,7 +165,7 @@ export class Brainly {
                     answers: Answer[];
                 }[];
     }
-    return await new Promise((resolve) => {
+    return await new Promise((resolve, reject) => {
       let shouldReturn = true;
       languages.every((l) => {
         this.worker.run({
@@ -184,6 +184,8 @@ export class Brainly {
 
         return shouldReturn;
       });
+
+      reject(new Error('Try again!')); // Blocked requests.
     });
   }
 
