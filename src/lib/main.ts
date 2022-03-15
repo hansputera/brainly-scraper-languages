@@ -187,7 +187,8 @@ export class Brainly {
         return shouldReturn;
       });
 
-      reject(new Error('Try again!')); // Blocked requests.
+      reject(new Error('Try again! May you are getting blocked from ' +
+'brainly sites, or the result data is empty')); // Blocked requests or empty result.
     });
   }
 
