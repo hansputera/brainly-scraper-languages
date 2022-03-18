@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import type {Question, Answer, LanguageList} from './types';
 
-export type CacheResult = Record<LanguageList, Record<string, {
+type CacheResult = Record<LanguageList, Record<string, {
     question: Question;
     answers: Answer[];
 }[]>>;
@@ -23,13 +23,6 @@ export class Cache {
     }
   }
 
-  /**
-   * Remove caches data.
-   * @return {void}
-   */
-  clearAll(): void {
-    fs.writeFileSync(this.temporaryPath, JSON.stringify({}));
-  }
   /**
      * @param {LanguageList} l
      * @param {string} q
