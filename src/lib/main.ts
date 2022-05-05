@@ -163,13 +163,15 @@ export class Brainly {
                 }[];
     }
     return await new Promise(async (resolve, reject) => {
-      resolve(await Promise.any(languages.map((language) => this.worker.run({
-        'c': language,
+      const result = await Promise.any(languages.map((country) => this.worker.run({
+        'c': country,
         language,
         question,
         length,
         options,
-      }, {'name': 'search'}))));
+      }, {'name': 'search'})));
+      
+      resolve(result);
     });
   }
 
