@@ -73,7 +73,10 @@ export class Brainly {
 		options?: AxiosRequestConfig,
 	): Promise<{ question: Question; answers: Answer[] }[]> {
 		try {
-			if (this.enabledCache && this.cache.has(language, question.toLowerCase())) {
+			if (
+				this.enabledCache &&
+				this.cache.has(language, question.toLowerCase())
+			) {
 				return this.cache.get(language, question.toLowerCase()) as {
 					question: Question;
 					answers: Answer[];
@@ -171,7 +174,10 @@ export class Brainly {
 		length: number = 10,
 		options?: AxiosRequestConfig,
 	): Promise<{ question: Question; answers: Answer[] }[]> {
-		if (this.enabledCache && this.cache.has(language, question.toLowerCase())) {
+		if (
+			this.enabledCache &&
+			this.cache.has(language, question.toLowerCase())
+		) {
 			return this.cache.get(language, question.toLowerCase()) as {
 				question: Question;
 				answers: Answer[];
