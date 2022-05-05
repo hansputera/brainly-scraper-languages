@@ -6,11 +6,12 @@
   "types": "./build/src/index.d.ts",
   "scripts": {
     "clean": "rimraf build",
-    "test": "npm run build && node ./build/src/test",
+    "test": "npm run build && node ./build/test.js",
     "build": "npm run clean && tsc --build tsconfig.json",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "prepare": "husky install",
-    "docs": "typedoc --footerTypedocVersion --footerDate --footerTime --favicon https://i.ibb.co/pyqPrLk/image.png"
+    "docs": "typedoc --footerTypedocVersion --footerDate --footerTime --favicon https://i.ibb.co/pyqPrLk/image.png",
+    "format": "prettier \"src/**/*.ts\" --write"
   },
   "author": {
     "name": "Hanif Dwy Putra S",
@@ -28,7 +29,9 @@
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.4.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^7.0.4",
+    "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "typedoc": "latest",
     "typedoc-plugin-extras": "^2.2.1",

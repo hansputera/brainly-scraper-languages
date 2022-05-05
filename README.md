@@ -29,30 +29,25 @@ brain.search("Pythagoras", "es").then(console.log).catch(console.error);
 
 ```json
 [
-    {
-        "question": {
-            "id": 5070014,
-            "content": "Pythagoras nació en el año 580 a.c  y murió en el año 501. ¿Que edad tenia Pythagoras Cúando murió?",
-            "attachments": [],
-            "author": {
-                "id": 3467036,
-                "avatar_url": "https://es-static.z-dn.net/files/d9d/8f696cce4d637d278ba011b6159642b8.jpg",
-                "deleted": false,
-                "url": "https://brainly.lat/app/profile/3467036",
-                "rank": "Aspirante",
-                "username": "BeeluuCabj"
-            }
-        },
-        "answers": [
-            {
-                "content": "Como nació y murió a.c.... \n" +
-          "-501-(-580) -- -501+580= 79... Edad que tenía cuando murió.",
-                "attachments": [],
-                "rates": 4,
-                "rating": 3.75
-            }
-        ]
-    }, { ... }
+  {
+    question: {
+      id: 5070014,
+      content: 'Pythagoras nació en el año 580 a.c  y murió en el año 501. ¿Que edad tenia Pythagoras Cúando murió?',
+      closed: true,
+      created: [Object],
+      attachments: [],
+      author: [Object],
+      education: 'matematicas',
+      education_level: undefined,
+      canBeAnswered: true,
+      points_answer: [Object],
+      points_question: 10,
+      grade: 'Secundaria',
+      lastActivity: '2020-09-22T00:22:19.000Z',
+      verifiedAnswer: true
+    },
+    answers: [ [Object] ]
+  }, { ... }
 ]
 ```
 
