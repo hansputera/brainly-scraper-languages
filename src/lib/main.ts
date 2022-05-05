@@ -10,7 +10,6 @@ import {
 	Question,
 } from './types';
 import { fetcherClient } from './fetcher';
-
 import { Cache } from './cache';
 
 /**

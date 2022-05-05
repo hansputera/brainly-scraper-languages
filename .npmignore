@@ -9,3 +9,7 @@ typedoc.json
 tsconfig.json
 build/**/test.*
 .yarn/
+.husky/
+*.yml
+.prettierignore
+.prettierrc.json
