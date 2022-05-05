@@ -43,8 +43,6 @@ export async function search({c, language, question, length = 10, options}:{
 
     return objects;
   } catch (err) {
-    return {
-      'err': (err as Error).message,
-    };
+    throw new Error((err as Error).message);
   }
 }

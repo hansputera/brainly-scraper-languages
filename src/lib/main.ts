@@ -27,7 +27,6 @@ export class Brainly {
      */
   private worker = new Piscina({
     'filename': Path.resolve(__dirname, 'worker.js'),
-    'maxThreads': 30,
   });
 
   /**
@@ -49,20 +48,20 @@ export class Brainly {
      * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
      *
      * @description This method based on constructor country code.
-     * @param {LanguageList} language What language want to search?
      * @param {string} question A question you want to search. Example: `Pythagoras theory`
+     * @param {LanguageList?} language What language want to search?
      * @param {number} length Length array from question list
      * @param {AxiosRequestConfig?} options Custom Axios request options
      *
      * Example:
      * ```ts
-     *  brain.search('id', 'Pythagoras', 10).then(console.log);
+     *  brain.search('Pythagoras', 'id', 10).then(console.log);
      * ```
      * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
   public async search(
-      language: LanguageList = 'id',
       question: string,
+      language: LanguageList = 'id',
       length: number = 10,
       options?: AxiosRequestConfig):
         Promise<{ question: Question; answers: Answer[]; }[]> {
@@ -83,15 +82,11 @@ export class Brainly {
         'name': 'search',
       });
 
-      if (result.err) {
-        throw new Error(result.err as string);
-      } else {
-        this.cache.set(language, question, result);
-        return result as {
-                    question: Question;
-                    answers: Answer[];
-                }[];
-      }
+      this.cache.set(language, question, result);
+      return result as {
+           question: Question;
+           answers: Answer[];
+       }[];
     } catch (err) {
       throw new Error(err as string);
     }
@@ -142,20 +137,20 @@ export class Brainly {
      * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
      *
      * @description - You can use this method if you won't receive 403 forbidden.
-     * @param {LanguageList} language What language want to search?
      * @param {string} question A question you want to search. Example: `Pythagoras theory`
+     * @param {LanguageList?} language What language want to search?
      * @param {number} length Length array from question list
      * @param {AxiosRequestConfig?} options Custom Axios request options
      *
      * Example:
      * ```ts
-     *  brain.searchWithMT('id', 'Pythagoras', 10).then(console.log);
+     *  brain.searchWithMT('Pythagoras', 'id', 10).then(console.log);
      * ```
      * @return {Promise<{question: Question, answers: Answer[]}[]>}
      */
   public async searchWithMT(
-      language: LanguageList = 'id',
       question: string,
+      language: LanguageList = 'id',
       length: number = 10,
       options?: AxiosRequestConfig):
         Promise<{ question: Question; answers: Answer[]; }[]> {
@@ -167,28 +162,14 @@ export class Brainly {
                     answers: Answer[];
                 }[];
     }
-    return await new Promise((resolve, reject) => {
-      let shouldReturn = true;
-      languages.every((l) => {
-        this.worker.run({
-          'c': l,
-          'language': language,
-          'question': question,
-          'length': length,
-          'options': options,
-        }, {'name': 'search'}).then((d) => {
-          if (!d.err) {
-            shouldReturn = false;
-            this.cache.set(language, question.toLowerCase(), d);
-            resolve(d);
-          }
-        });
-
-        return shouldReturn;
-      });
-
-      reject(new Error('Try again! May you are getting blocked from ' +
-'brainly sites, or the result data is empty')); // Blocked requests or empty result.
+    return await new Promise(async (resolve, reject) => {
+      resolve(await Promise.any(languages.map((language) => this.worker.run({
+        'c': language,
+        language,
+        question,
+        length,
+        options,
+      }, {'name': 'search'}))));
     });
   }
 

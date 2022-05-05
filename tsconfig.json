@@ -3,7 +3,7 @@
         "allowJs": true,
         "strict": true,
         "outDir": "./build",
-        "target": "ES2016",
+        "target": "ESNext",
         "module": "CommonJS",
         "declaration": true,
         "esModuleInterop": true,

@@ -19,10 +19,10 @@ See https://github.com/hansputera/brainly-scraper-languages/blob/master/AVAILABL
 const { Brainly } = require("brainly-scraper-v2");
 const brain = new Brainly("id"); // 'id' - Default to 'id'
 
-// New Method 'searchWithMT' in (v2.0.8) (You don't need to enter country code in the constructor.)
-brain.searchWithMT("es", "Pythagoras").then(console.log).catch(console.error);
-// Also, you can use old method (<=v2.0.8) (You need to enter correctly country code in the constructor).
-brain.search('es', "Pythagoras").then(console.log).catch(console.error);
+// You can do
+brain.searchWithMT("Pythagoras", "es").then(console.log).catch(console.error);
+// Or (You need to enter correctly country code in the constructor).
+brain.search("Pythagoras", "es").then(console.log).catch(console.error);
 ```
 
 - Output
@@ -55,6 +55,9 @@ brain.search('es', "Pythagoras").then(console.log).catch(console.error);
     }, { ... }
 ]
 ```
+
+#  ⏱ Changelogs
+You can check the changelogs on the [GitHub Releases Page](https://github.com/hansputera/brainly-scraper-languages/releases)
 
 # ⚙️ Issues and Bugs
 If you have problems using this library, you can create an issue in the [github repository](https://github.com/hansputera/brainly-scraper-languages). Remember, don't forget to read the instructions and try.
