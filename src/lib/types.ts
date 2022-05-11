@@ -102,7 +102,7 @@ export interface Question {
 	 * This question is have verified answer?
 	 */
 	verifiedAnswer: boolean;
-	
+
 	/**
 	 * Database ID
 	 */
@@ -159,7 +159,7 @@ export interface Answer {
 	/**
 	 * Database ID
 	 */
-	 _id: string;
+	_id: string;
 }
 
 export interface Comment {
