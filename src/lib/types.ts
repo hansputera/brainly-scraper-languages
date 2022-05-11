@@ -102,6 +102,11 @@ export interface Question {
 	 * This question is have verified answer?
 	 */
 	verifiedAnswer: boolean;
+	
+	/**
+	 * Database ID
+	 */
+	_id: string;
 }
 
 /**
@@ -151,6 +156,10 @@ export interface Answer {
 	 * The comments.
 	 */
 	comments: Comment[];
+	/**
+	 * Database ID
+	 */
+	 _id: string;
 }
 
 export interface Comment {
@@ -196,6 +205,7 @@ export type OriginalAttachments = {
 }[];
 
 export interface OriginalAuthor {
+	id: string;
 	databaseId: number;
 	nick: string;
 	avatar: {
@@ -253,6 +263,7 @@ export interface OriginalVerification {
 }
 
 export interface OriginalQuestion {
+	id: string;
 	databaseId: number;
 	content: string;
 	author: OriginalAuthor;
@@ -282,6 +293,7 @@ export interface OriginalQuestionAndSimilar extends OriginalQuestion {
 }
 
 export interface OriginalAnswer {
+	id: string;
 	databaseId: number;
 	content: string;
 	created: string;
@@ -350,6 +362,7 @@ export interface Author {
 		count: number;
 		data: AuthorQuestionData[];
 	};
+	_id: string;
 }
 
 export interface AuthorQuestionData {

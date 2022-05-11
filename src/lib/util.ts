@@ -118,6 +118,7 @@ export default class Util {
 						} as AuthorQuestionData),
 				),
 			},
+			_id: author.id,
 		};
 		return expectedObject;
 	}
@@ -167,6 +168,7 @@ export default class Util {
 			comments: answer.comments.edges.map((x) =>
 				this.convertComment(x.node),
 			),
+			_id: answer.id,
 		};
 		return expectedObject;
 	}
@@ -204,6 +206,7 @@ export default class Util {
 			lastActivity: question.lastActivity,
 			verifiedAnswer: question.answers.hasVerified,
 			// answers: question.answers.nodes.map((x) => this.convertAnswer(x)),
+			_id: question.id,
 		};
 
 		return expectedObject;

@@ -95,7 +95,8 @@ export class Brainly {
 				},
 			);
 
-			this.cache.set(language, question, result);
+			if (this.enabledCache)
+                          this.cache.set(language, question, result);
 			return result as {
 				question: Question;
 				answers: Answer[];
@@ -199,6 +200,8 @@ export class Brainly {
 				),
 			);
 
+                        if (this.enabledCache)
+                          this.cache.set(language, question, result);
 			resolve(result);
 		});
 	}
