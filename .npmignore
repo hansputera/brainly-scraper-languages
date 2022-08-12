@@ -13,3 +13,4 @@ build/**/test.*
 *.yml
 .prettierignore
 .prettierrc.json
+renovate.json
