@@ -39,11 +39,12 @@ export type Attachments = string[];
  */
 export type JsonRes = {
 	data: {
-		questionSearch: {
+		questionSearch?: {
 			edges: BrainlyResponse[];
 		};
+		userById?: OriginalAuthor;
 	};
-}[];
+};
 
 /**
  * The question.
