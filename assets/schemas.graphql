@@ -1,0 +1,605 @@
+query FindUserById($userid: ID!) {
+  user: user(id: $userid) {
+    groups {
+      id
+      name
+      description
+    }
+    statistics {
+      warningCount
+      banCount
+    }
+    id
+    databaseId
+    nick
+    points
+    gender
+    description
+    isDeleted
+    avatar {
+      id
+      databaseId
+      url
+      thumbnailUrl
+      extension
+    }
+    category
+    clientType
+    rank {
+      id
+      databaseId
+      name
+      description
+    }
+    grade {
+      id
+      databaseId
+      name
+      slug
+    }
+    specialRanks {
+      id
+      databaseId
+      name
+      description
+    }
+    questions {
+      count
+    }
+    answers {
+      count
+    }
+    friends {
+      count
+    }
+    thanks {
+      count
+    }
+    created
+    progress {
+      dailyThanksInLast14Days {
+        count
+      }
+      dailyBestAnswersInLast14Days {
+        count
+      }
+      dailyAnswersBySubjectInLast14Days {
+        count
+      }
+      dailyHelpedUsersCountInLast14Days {
+        count
+      }
+    }
+    receivedThanks
+    answerCountBySubject {
+      subject {
+        name
+        slug
+        id
+      }
+      count
+      markedAsBest
+    }
+    bestAnswersCount
+    thanksForAnswerCount
+    helpedUsersCount
+    answererLevel
+    answeringStreak {
+      progress
+      progressIncreasedToday
+      pointsForToday
+      pointsForTomorrow
+      canLotteryPointsBeClaimed
+    }
+    bestAnswersCountInLast30Days
+  }
+}
+
+query FindUserByDatabaseID($userid: Int!) {
+  user: userById(id: $userid) {
+    groups {
+      id
+      name
+      description
+    }
+    statistics {
+      warningCount
+      banCount
+    }
+    id
+    databaseId
+    nick
+    points
+    gender
+    description
+    isDeleted
+    avatar {
+      id
+      databaseId
+      url
+      thumbnailUrl
+      extension
+    }
+    category
+    clientType
+    rank {
+      id
+      databaseId
+      name
+      description
+    }
+    grade {
+      id
+      databaseId
+      name
+      slug
+    }
+    specialRanks {
+      id
+      databaseId
+      name
+      description
+    }
+    questions {
+      count
+    }
+    answers {
+      count
+    }
+    friends {
+      count
+    }
+    thanks {
+      count
+    }
+    created
+    progress {
+      dailyThanksInLast14Days {
+        count
+      }
+      dailyBestAnswersInLast14Days {
+        count
+      }
+      dailyAnswersBySubjectInLast14Days {
+        count
+      }
+      dailyHelpedUsersCountInLast14Days {
+        count
+      }
+    }
+    receivedThanks
+    answerCountBySubject {
+      subject {
+        name
+        slug
+        id
+      }
+      count
+      markedAsBest
+    }
+    bestAnswersCount
+    thanksForAnswerCount
+    helpedUsersCount
+    answererLevel
+    answeringStreak {
+      progress
+      progressIncreasedToday
+      pointsForToday
+      pointsForTomorrow
+      canLotteryPointsBeClaimed
+    }
+    bestAnswersCountInLast30Days
+  }
+}
+
+query SearchQuery($query: String!, $len: Int!) {
+  questionSearch(query: $query, first: $len, after: null) {
+    edges {
+      node {
+        id
+        databaseId
+        points
+        pointsForAnswer
+        pointsForBestAnswer
+        created
+        isClosed
+        content
+        author {
+          id
+          nick
+          receivedThanks
+          avatar {
+            url
+            thumbnailUrl
+          }
+          databaseId
+          description
+          helpedUsersCount
+          gender
+          created
+          specialRanks {
+            name
+          }
+          bestAnswersCount
+          answererLevel
+          points
+          rank {
+            name
+          }
+          friends {
+            count
+          }
+          answeringStreak {
+            pointsForToday
+            pointsForTomorrow
+            progressIncreasedToday
+            progress
+            canLotteryPointsBeClaimed
+          }
+          bestAnswersCountInLast30Days
+          questions {
+            count
+            edges {
+              node {
+                content
+                grade {
+                  name
+                }
+                subject {
+                  slug
+                }
+                points
+                pointsForBestAnswer
+                pointsForAnswer
+                isClosed
+                canBeAnswered
+                created
+                attachments {
+                  url
+                }
+                grade {
+                  name
+                }
+                eduLevel
+                answers {
+                  nodes {
+                    id
+                    databaseId
+                    content
+                    created
+                    isBest
+                    isConfirmed
+                    qualityScore
+                    points
+                    ratesCount
+                    verification {
+                      approval {
+                        approver {
+                          nick
+                          databaseId
+                        }
+                      }
+                    }
+                    attachments {
+                      url
+                    }
+                    canComment
+                    comments {
+                      count
+                      edges {
+                        node {
+                          databaseId
+                          deleted
+                          content
+                          author {
+                            id
+                            nick
+                            avatar {
+                              url
+                              thumbnailUrl
+                            }
+                            databaseId
+                            friends {
+                              count
+                            }
+                            receivedThanks
+                            points
+                            created
+                            description
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        canBeAnswered
+        grade {
+          name
+        }
+        attachments {
+          url
+        }
+        lastActivity
+        subject {
+          slug
+        }
+        eduLevel
+        similar {
+          question {
+            content
+            author {
+              nick
+              avatar {
+                url
+                thumbnailUrl
+              }
+              id
+              databaseId
+              description
+              helpedUsersCount
+              gender
+              created
+              specialRanks {
+                name
+              }
+              bestAnswersCount
+              answererLevel
+              points
+              rank {
+                name
+              }
+              friends {
+                count
+              }
+              answeringStreak {
+                pointsForToday
+                pointsForTomorrow
+                progressIncreasedToday
+                progress
+                canLotteryPointsBeClaimed
+              }
+              bestAnswersCountInLast30Days
+              questions {
+                count
+                edges {
+                  node {
+                    content
+                    grade {
+                      name
+                    }
+                    subject {
+                      slug
+                    }
+                    points
+                    pointsForBestAnswer
+                    pointsForAnswer
+                    isClosed
+                    canBeAnswered
+                    created
+                    attachments {
+                      url
+                    }
+                    grade {
+                      name
+                    }
+                    eduLevel
+                    answers {
+                      nodes {
+                        id
+                        databaseId
+                        content
+                        created
+                        isBest
+                        isConfirmed
+                        points
+                        ratesCount
+                        verification {
+                          approval {
+                            approver {
+                              nick
+                              databaseId
+                            }
+                          }
+                        }
+                        attachments {
+                          url
+                        }
+                        canComment
+                        comments {
+                          count
+                          edges {
+                            node {
+                              content
+                              author {
+                                nick
+                                databaseId
+                                avatar {
+                                  url
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            id
+            databaseId
+            points
+            pointsForAnswer
+            pointsForBestAnswer
+            created
+            isClosed
+            canBeAnswered
+            grade {
+              name
+            }
+            eduLevel
+          }
+        }
+        content
+        answers {
+          hasVerified
+          nodes {
+            author {
+              receivedThanks
+              avatar {
+                url
+                thumbnailUrl
+              }
+              id
+              databaseId
+              description
+              helpedUsersCount
+              gender
+              created
+              specialRanks {
+                name
+              }
+              bestAnswersCount
+              answererLevel
+              points
+              rank {
+                name
+              }
+              friends {
+                count
+              }
+              answeringStreak {
+                pointsForToday
+                pointsForTomorrow
+                progressIncreasedToday
+                progress
+                canLotteryPointsBeClaimed
+              }
+              bestAnswersCountInLast30Days
+              questions {
+                count
+                edges {
+                  node {
+                    content
+                    grade {
+                      name
+                    }
+                    subject {
+                      slug
+                    }
+                    points
+                    pointsForBestAnswer
+                    pointsForAnswer
+                    isClosed
+                    canBeAnswered
+                    created
+                    attachments {
+                      url
+                    }
+                    grade {
+                      name
+                    }
+                    eduLevel
+                    answers {
+                      nodes {
+                        id
+                        databaseId
+                        content
+                        created
+                        isBest
+                        isConfirmed
+                        qualityScore
+                        points
+                        ratesCount
+                        verification {
+                          approval {
+                            approver {
+                              nick
+                              databaseId
+                            }
+                          }
+                        }
+                        attachments {
+                          url
+                        }
+                        canComment
+                        comments {
+                          count
+                          edges {
+                            node {
+                              id
+                              databaseId
+                              deleted
+                              content
+                              author {
+                                nick
+                                avatar {
+                                  url
+                                  thumbnailUrl
+                                }
+                                id
+                                databaseId
+                                friends {
+                                  count
+                                }
+                                receivedThanks
+                                points
+                                created
+                                description
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            content
+            points
+            isBest
+            canComment
+            isConfirmed
+            qualityScore
+            thanksCount
+            ratesCount
+            comments {
+              edges {
+                node {
+                  id
+                  databaseId
+                  deleted
+                  content
+                  author {
+                    nick
+                    avatar {
+                      url
+                      thumbnailUrl
+                    }
+                    id
+                    databaseId
+                    friends {
+                      count
+                    }
+                    receivedThanks
+                    points
+                    created
+                    description
+                  }
+                }
+              }
+            }
+            attachments {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
