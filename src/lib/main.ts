@@ -4,6 +4,7 @@ import type { AxiosRequestConfig, AxiosInstance } from 'axios';
 import { baseURLs, graphqlQuery, languages } from './config';
 import {
 	Answer,
+	Author,
 	BaseURLObject,
 	CountryList,
 	LanguageList,
@@ -154,6 +155,36 @@ export class Brainly {
 	}
 
 	/**
+	 * Find a Brainly User's Information.
+	 * @param {CountryList} country The user's country (you must fill it correctly)
+	 * @param {number} userId User's id (you can use Author.id to fill it)
+	 * @return {Promise<Author | undefined>}
+	 */
+	public async findUserById(
+		country: CountryList,
+		userId: number,
+	): Promise<Author | undefined> {
+		return await new Promise(async (resolve) => {
+			const result = await Promise.any(
+				languages.map((country2) =>
+					this.worker.run(
+						{
+							country: country2,
+							language: country.toLowerCase(),
+							userId: userId,
+						},
+						{
+							name: 'findUser',
+						},
+					),
+				),
+			);
+
+			resolve(result);
+		});
+	}
+
+	/**
 	 * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
 	 *
 	 * @description - You can use this method if you won't receive 403 forbidden.
@@ -183,7 +214,7 @@ export class Brainly {
 				answers: Answer[];
 			}[];
 		}
-		return await new Promise(async (resolve, reject) => {
+		return await new Promise(async (resolve) => {
 			const result = await Promise.any(
 				languages.map((country) =>
 					this.worker.run(
