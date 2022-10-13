@@ -42,7 +42,7 @@ export type JsonRes = {
 		questionSearch?: {
 			edges: BrainlyResponse[];
 		};
-		userById?: OriginalAuthor;
+		user?: OriginalAuthor;
 	};
 };
 

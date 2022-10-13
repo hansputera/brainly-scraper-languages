@@ -37,7 +37,10 @@ export async function search({
 				err: 'INVALID_LANGUAGE',
 			};
 		}
-		const body = Brainly.getRequestParams(question, length);
+		const body = Brainly.getRequestParams('SearchQuery', {
+			question,
+			length,
+		});
 		const response = await Brainly.client(c).post(
 			`graphql/${language.toLowerCase()}`,
 			body,
@@ -65,7 +68,7 @@ export async function search({
 }
 
 /**
- * @param {{country: CountryList, language: LanguageList, userId: number}} arg_0
+ * @param {{country: CountryList, language: LanguageList, userId: string}} arg_0
  * @return {Author}
  */
 export async function findUser({
@@ -75,9 +78,9 @@ export async function findUser({
 }: {
 	country: CountryList;
 	language: LanguageList;
-	userId: number;
+	userId: number | string;
 }): Promise<Author | { err: string } | undefined> {
-	if (Piscina.isWorkerThread) {
+	if (!Piscina.isWorkerThread) {
 		throw new Error("You're not able to use this command");
 	}
 
@@ -88,24 +91,17 @@ export async function findUser({
 			};
 		}
 
-		const response = await Brainly.client(country).get(
-			`graphql/${language.toLowerCase()}`,
+		const body = Brainly.getRequestParams(
+			typeof userId === 'number'
+				? 'FindUserByDatabaseID'
+				: 'FindUserById',
 			{
-				params: {
-					operationName: 'ProfilePage',
-					variables: {
-						userId: userId,
-					},
-					extensions: {
-						persistedQuery: {
-							version: 1,
-							sha256Hash: '9ea2aac464a0101bac6fa1'.concat(
-								'dd67758aea88f5052f7281952a16ea9658c252674b',
-							),
-						},
-					},
-				},
+				userid: userId,
 			},
+		);
+		const response = await Brainly.client(country).post(
+			`graphql/${language.toLowerCase()}`,
+			body,
 		);
 
 		if (response.status !== 200) {
@@ -115,13 +111,13 @@ export async function findUser({
 		}
 
 		const json = response.data as JsonRes;
-		if (typeof json !== 'object' || !json.data.userById) {
+		if (typeof json !== 'object' || !json.data.user) {
 			return {
 				err: 'Response fails',
 			};
 		}
 
-		return Util.convertAuthor(json.data.userById);
+		return Util.convertAuthor(json.data.user);
 	} catch (err) {
 		throw new Error((err as Error).message);
 	}

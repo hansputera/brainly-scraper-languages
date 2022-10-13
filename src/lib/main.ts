@@ -1,7 +1,7 @@
 import Piscina from 'piscina';
 import Path from 'path';
 import type { AxiosRequestConfig, AxiosInstance } from 'axios';
-import { baseURLs, graphqlQuery, languages } from './config';
+import { baseURLs, getGraphqlQuery, languages } from './config';
 import {
 	Answer,
 	Author,
@@ -108,27 +108,24 @@ export class Brainly {
 
 	/**
 	 * Get body request to sent.
-	 * @param {string} question - A question
-	 * @param {number} length - How much items you want to receive.
+	 * @param {string} query Operation query name
+	 * @param {Record<string, unknown>} vars Variables want to sent
 	 *
 	 * @return {{operationName: string, query: string, variables: { len: number, query: string }}[]}
 	 */
 	static getRequestParams(
-		question: string,
-		length: number = 10,
+		query: string,
+		vars: Record<string, unknown>,
 	): {
 		operationName: string;
 		query: string;
-		variables: { len: number; query: string };
+		variables: Record<string, unknown>;
 	}[] {
 		return [
 			{
-				operationName: 'SearchQuery',
-				query: graphqlQuery,
-				variables: {
-					len: length,
-					query: question,
-				},
+				operationName: query,
+				query: getGraphqlQuery(),
+				variables: vars,
 			},
 		];
 	}
@@ -157,12 +154,12 @@ export class Brainly {
 	/**
 	 * Find a Brainly User's Information.
 	 * @param {CountryList} country The user's country (you must fill it correctly)
-	 * @param {number} userId User's id (you can use Author.id to fill it)
+	 * @param {number | string} userId User's id (you can use Author.id or Author._id to fill it)
 	 * @return {Promise<Author | undefined>}
 	 */
 	public async findUserById(
 		country: CountryList,
-		userId: number,
+		userId: number | string,
 	): Promise<Author | undefined> {
 		return await new Promise(async (resolve) => {
 			const result = await Promise.any(
