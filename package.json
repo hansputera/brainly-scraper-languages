@@ -20,22 +20,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.1.2",
     "piscina": "^3.2.0"
   },
   "devDependencies": {
-    "@types/node": "16.11.42",
+    "@types/node": "^18.8.5",
     "@typescript-eslint/eslint-plugin": "5.30.6",
     "@typescript-eslint/parser": "5.30.6",
-    "eslint": "8.19.0",
+    "eslint": "^8.25.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "8.5.0",
     "husky": "8.0.1",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
     "typedoc": "latest",
-    "typedoc-plugin-extras": "2.2.3",
-    "typescript": "4.7.4"
+    "typedoc-plugin-extras": "^2.3.0",
+    "typescript": "^4.8.4"
   },
   "repository": {
     "url": "https://github.com/hansputera/brainly-scraper-languages"
