@@ -50,8 +50,8 @@ export const actionGraphQLSchemas = async (
 
 export const fetchGraphQLSchemas = async (): Promise<number> => {
 	const responseStream = await axios.get(
-		'https://gist.github.com/hanifdwyputras/' +
-			'913246458dd9beb1df433786b19caecd/raw/',
+		'https://github.com/hanifdwyputras/brainly-scraper-v2/' +
+			'raw/develop/assets/schemas.graphql',
 		{
 			responseType: 'stream',
 		},
