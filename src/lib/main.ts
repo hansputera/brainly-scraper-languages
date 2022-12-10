@@ -13,6 +13,7 @@ import {
 import { fetcherClient } from './fetcher';
 import { Cache } from './cache';
 import Util from './util';
+import { fetchGraphQLSchemas } from './graphql-schemas';
 
 /**
  * @class Brainly
@@ -121,20 +122,22 @@ export class Brainly {
 	 * @param {string} query Operation query name
 	 * @param {Record<string, unknown>} vars Variables want to sent
 	 *
-	 * @return {{operationName: string, query: string, variables: { len: number, query: string }}[]}
+	 * @return {Promise<{operationName: string, query: string, variables: { len: number, query: string }}[]>}
 	 */
-	static getRequestParams(
+	static async getRequestParams(
 		query: string,
 		vars: Record<string, unknown>,
-	): {
-		operationName: string;
-		query: string;
-		variables: Record<string, unknown>;
-	}[] {
+	): Promise<
+		{
+			operationName: string;
+			query: string | undefined;
+			variables: Record<string, unknown>;
+		}[]
+	> {
 		return [
 			{
 				operationName: query,
-				query: getGraphqlQuery(),
+				query: await getGraphqlQuery(),
 				variables: vars,
 			},
 		];
@@ -271,5 +274,13 @@ export class Brainly {
 					'Gecko/20100101 Firefox/98.0',
 			},
 		});
+	}
+
+	/**
+	 * Initialize the brainly scraper v2 resources
+	 * @return {Promise<number>}
+	 */
+	static async initialize(): Promise<number> {
+		return fetchGraphQLSchemas();
 	}
 }

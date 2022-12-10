@@ -37,12 +37,10 @@ export async function search({
 				err: 'INVALID_LANGUAGE',
 			};
 		}
-		const cookie = Util.generateZadaneCookieGuest();
-		const body = Brainly.getRequestParams('SearchQuery', {
+		const body = await Brainly.getRequestParams('SearchQuery', {
 			question,
 			length,
 		});
-		options?.headers?.common?.set('Cookie', cookie);
 
 		const response = await Brainly.client(c).post(
 			`graphql/${language.toLowerCase()}`,
@@ -96,14 +94,9 @@ export async function findUser({
 			};
 		}
 
-		const body = Brainly.getRequestParams(
-			typeof userId === 'number'
-				? 'FindUserByDatabaseID'
-				: 'FindUserById',
-			{
-				userid: userId,
-			},
-		);
+		const body = await Brainly.getRequestParams('FindUserById', {
+			userid: userId,
+		});
 		const response = await Brainly.client(country).post(
 			`graphql/${language.toLowerCase()}`,
 			body,

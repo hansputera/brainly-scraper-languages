@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import path from 'path';
+import { actionGraphQLSchemas } from './graphql-schemas';
 
 export const baseURLs = {
 	id: 'https://brainly.co.id',
@@ -15,18 +14,12 @@ export const baseURLs = {
 	fr: 'https://nosdevoirs.fr',
 };
 
-export const getGraphqlQuery = () => {
-	const graphqlFile = path.resolve(
-		__dirname,
-		'..',
-		'..',
-		'assets',
-		'schemas.graphql',
-	);
-
-	return fs.readFileSync(graphqlFile, {
-		encoding: 'utf8',
-	});
+export const getGraphqlQuery = async (): Promise<string | undefined> => {
+	try {
+		return actionGraphQLSchemas('read');
+	} catch {
+		throw new Error('Please initialize the brainly scraper query schemas!');
+	}
 };
 
 export const languages = Object.keys(baseURLs);
