@@ -14,3 +14,4 @@ build/**/test.*
 .prettierignore
 .prettierrc.json
 renovate.json
+assets/
