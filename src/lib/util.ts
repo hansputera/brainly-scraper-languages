@@ -17,6 +17,17 @@ import type {
  */
 export default class Util {
 	/**
+	 * Parse Node ID to [type, id]
+	 * @param {string} id Node ID
+	 * @return {[string, number]}
+	 */
+	static parseId(id: string): [string, number] {
+		const [type, idSubject] = Buffer.from(id, 'base64')
+			.toString('utf8')
+			.split(':');
+		return [type, parseInt(idSubject)];
+	}
+	/**
 	 * Normalize a text
 	 *
 	 * @param {string} text
@@ -68,17 +79,15 @@ export default class Util {
 	 * @return {Author}
 	 */
 	public static convertAuthor(author: OriginalAuthor): Author {
+		const parseId = Util.parseId(author.id);
 		const expectedObject: Author = {
 			username: author.nick,
-			id: author.databaseId,
+			id: parseId.join(':'),
 			helpedUsersCount: author.helpedUsersCount,
 			receivedThanks: author.receivedThanks,
 			avatar_url: author.avatar ? author.avatar.url : undefined,
 			gender: author.gender,
 			points: author.points,
-			description: author.description.length
-				? author.description
-				: undefined,
 			bestAnswersCount: author.bestAnswersCount,
 			rank: author.rank ? author.rank.name : '-',
 			specialRanks: author.specialRanks.length
@@ -105,7 +114,7 @@ export default class Util {
 								iso: r.node.created,
 								date: new Date(r.node.created),
 							},
-							education: r.node.subject.slug,
+							education: r.node.subject.name,
 							canBeAnswered: r.node.canBeAnswered,
 							attachments: r.node.attachments.map((x) => x.url),
 							education_level: r.node.eduLevel,
@@ -118,7 +127,7 @@ export default class Util {
 						} as AuthorQuestionData),
 				),
 			},
-			_id: author.id,
+			databaseId: parseId[1],
 		};
 		return expectedObject;
 	}
@@ -130,11 +139,13 @@ export default class Util {
 	 * @return {Comment}
 	 */
 	public static convertComment(comment: OriginalComment): Comment {
+		const parseId = Util.parseId(comment.id);
 		const expectedObject: Comment = {
 			content: this.clearContent(comment.content),
 			author: comment.author,
-			id: comment.databaseId,
+			id: parseId.join(':'),
 			deleted: comment.deleted,
+			databaseId: parseId[1],
 		};
 
 		return expectedObject;
@@ -147,6 +158,7 @@ export default class Util {
 	 * @return {Answer}
 	 */
 	public static convertAnswer(answer: OriginalAnswer): Answer {
+		const parseId = Util.parseId(answer.id);
 		const expectedObject: Answer = {
 			content: this.clearContent(answer.content),
 			author: answer.author
@@ -168,7 +180,8 @@ export default class Util {
 			comments: answer.comments.edges.map((x) =>
 				this.convertComment(x.node),
 			),
-			_id: answer.id,
+			databaseId: parseId[1],
+			id: parseId.join(':'),
 		};
 		return expectedObject;
 	}
@@ -182,8 +195,9 @@ export default class Util {
 	public static convertQuestion(
 		question: OriginalQuestionAndSimilar,
 	): Question {
+		const parseId = Util.parseId(question.id);
 		const expectedObject: Question = {
-			id: question.databaseId,
+			id: parseId.join(':'),
 			content: this.clearContent(question.content),
 			closed: question.isClosed,
 			created: {
@@ -194,7 +208,7 @@ export default class Util {
 			author: question.author
 				? this.convertAuthor(question.author)
 				: undefined,
-			education: question.subject.slug,
+			education: question.subject.name,
 			education_level: question.eduLevel ?? undefined,
 			canBeAnswered: question.canBeAnswered,
 			points_answer: {
@@ -206,9 +220,36 @@ export default class Util {
 			lastActivity: question.lastActivity,
 			verifiedAnswer: question.answers.hasVerified,
 			// answers: question.answers.nodes.map((x) => this.convertAnswer(x)),
-			_id: question.id,
+			databaseId: parseId[1],
 		};
 
 		return expectedObject;
+	}
+
+	/**
+	 * Generate zadane cookie
+	 * @return {string}
+	 */
+	static generateZadaneCookieGuest(): string {
+		// src
+		// var COOKIE_TOKEN_GUEST = 'Zadanepl_cookie[Token][Guest]';
+		// var COOKIE_TOKEN_GUEST_LENGHT = 80;
+		// var COOKIE_TOKEN_GUEST_TTL = 2 * 365 * 24 * 3600;
+
+		const chars =
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+			'abcdefghijklmnopqrstuvwxyz0123456789';
+		let token = '';
+
+		for (let i = 0; i < 80; i++) {
+			token += chars.charAt(Math.floor(Math.random() * chars.length));
+		}
+
+		return (
+			'Zadanepl_cookie[Token][Guest]=' +
+			token +
+			';path=/;max-age=' +
+			2 * 365 * 24 * 3600
+		);
 	}
 }

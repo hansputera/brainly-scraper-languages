@@ -53,7 +53,7 @@ export interface Question {
 	/**
 	 * Question ID
 	 */
-	id: number;
+	id: string;
 	/**
 	 * The question contents.
 	 */
@@ -107,13 +107,17 @@ export interface Question {
 	/**
 	 * Database ID
 	 */
-	_id: string;
+	databaseId: number;
 }
 
 /**
  * Answer
  */
 export interface Answer {
+	/**
+	 * The answer identifier
+	 */
+	id: string;
 	/**
 	 * The answer contents.
 	 */
@@ -160,14 +164,14 @@ export interface Answer {
 	/**
 	 * Database ID
 	 */
-	_id: string;
+	databaseId: number;
 }
 
 export interface Comment {
 	/**
 	 * Comment ID (comment identifier)
 	 */
-	id: number;
+	id: string;
 	/**
 	 * The comment's author.
 	 */
@@ -180,14 +184,19 @@ export interface Comment {
 	 * Comment is already deleted?
 	 */
 	deleted?: boolean;
+
+	/**
+	 * Database ID
+	 */
+	databaseId: number;
 }
 
 export interface OriginalComment {
-	databaseId: number;
+	id: string;
 	deleted?: boolean;
 	content: string;
 	author: {
-		databaseId: number;
+		id: string;
 		nick: string;
 		avatar: {
 			url: string;
@@ -197,7 +206,6 @@ export interface OriginalComment {
 		receivedThanks: number;
 		points: number;
 		created: string;
-		description: string;
 	};
 }
 
@@ -207,13 +215,11 @@ export type OriginalAttachments = {
 
 export interface OriginalAuthor {
 	id: string;
-	databaseId: number;
 	nick: string;
 	avatar: {
 		url: string;
 		thumbnailUrl: string;
 	};
-	description: string;
 	helpedUsersCount: number;
 	gender: string;
 	created: string;
@@ -240,7 +246,7 @@ export interface OriginalAuthor {
 			node: {
 				content: string;
 				grade: { name: string };
-				subject: { slug: string };
+				subject: { name: string; id: string };
 				points: number;
 				pointsForBestAnswer: number;
 				pointsForAnswer: number;
@@ -258,14 +264,13 @@ export interface OriginalVerification {
 	approval: {
 		approver: {
 			nick: string;
-			databaseId: number;
+			id: string;
 		};
 	};
 }
 
 export interface OriginalQuestion {
 	id: string;
-	databaseId: number;
 	content: string;
 	author: OriginalAuthor;
 	attachments: OriginalAttachments;
@@ -278,7 +283,8 @@ export interface OriginalQuestion {
 	grade: { name: string };
 	lastActivity?: string;
 	subject: {
-		slug: string;
+		name: string;
+		id: string;
 	};
 	eduLevel?: number;
 	answers: {
@@ -295,7 +301,6 @@ export interface OriginalQuestionAndSimilar extends OriginalQuestion {
 
 export interface OriginalAnswer {
 	id: string;
-	databaseId: number;
 	content: string;
 	created: string;
 	isBest: boolean;
@@ -320,7 +325,7 @@ export interface Author {
 	/**
 	 * The author's ID (author identifier).
 	 */
-	id: number;
+	id: string;
 	/**
 	 * The author's username.
 	 */
@@ -333,10 +338,6 @@ export interface Author {
 	 * The author's rank.
 	 */
 	rank: string;
-	/**
-	 * The author's bio.
-	 */
-	description?: string;
 	/**
 	 * The author's gender.
 	 */
@@ -363,7 +364,7 @@ export interface Author {
 		count: number;
 		data: AuthorQuestionData[];
 	};
-	_id: string;
+	databaseId: number;
 }
 
 export interface AuthorQuestionData {

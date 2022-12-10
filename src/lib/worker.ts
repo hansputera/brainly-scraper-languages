@@ -37,10 +37,13 @@ export async function search({
 				err: 'INVALID_LANGUAGE',
 			};
 		}
+		const cookie = Util.generateZadaneCookieGuest();
 		const body = Brainly.getRequestParams('SearchQuery', {
 			question,
 			length,
 		});
+		options?.headers?.common?.set('Cookie', cookie);
+
 		const response = await Brainly.client(c).post(
 			`graphql/${language.toLowerCase()}`,
 			body,

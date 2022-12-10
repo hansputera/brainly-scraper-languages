@@ -5,41 +5,26 @@ query FindUserById($userid: ID!) {
       name
       description
     }
-    statistics {
-      warningCount
-      banCount
-    }
     id
-    databaseId
     nick
     points
     gender
-    description
-    isDeleted
     avatar {
       id
-      databaseId
       url
       thumbnailUrl
-      extension
     }
-    category
-    clientType
     rank {
       id
-      databaseId
       name
       description
     }
     grade {
       id
-      databaseId
       name
-      slug
     }
     specialRanks {
       id
-      databaseId
       name
       description
     }
@@ -52,7 +37,7 @@ query FindUserById($userid: ID!) {
     friends {
       count
     }
-    thanks {
+    thanks(first: 1, after: "_____") {
       count
     }
     created
@@ -74,104 +59,6 @@ query FindUserById($userid: ID!) {
     answerCountBySubject {
       subject {
         name
-        slug
-        id
-      }
-      count
-      markedAsBest
-    }
-    bestAnswersCount
-    thanksForAnswerCount
-    helpedUsersCount
-    answererLevel
-    answeringStreak {
-      progress
-      progressIncreasedToday
-      pointsForToday
-      pointsForTomorrow
-      canLotteryPointsBeClaimed
-    }
-    bestAnswersCountInLast30Days
-  }
-}
-
-query FindUserByDatabaseID($userid: Int!) {
-  user: userById(id: $userid) {
-    groups {
-      id
-      name
-      description
-    }
-    statistics {
-      warningCount
-      banCount
-    }
-    id
-    databaseId
-    nick
-    points
-    gender
-    description
-    isDeleted
-    avatar {
-      id
-      databaseId
-      url
-      thumbnailUrl
-      extension
-    }
-    category
-    clientType
-    rank {
-      id
-      databaseId
-      name
-      description
-    }
-    grade {
-      id
-      databaseId
-      name
-      slug
-    }
-    specialRanks {
-      id
-      databaseId
-      name
-      description
-    }
-    questions {
-      count
-    }
-    answers {
-      count
-    }
-    friends {
-      count
-    }
-    thanks {
-      count
-    }
-    created
-    progress {
-      dailyThanksInLast14Days {
-        count
-      }
-      dailyBestAnswersInLast14Days {
-        count
-      }
-      dailyAnswersBySubjectInLast14Days {
-        count
-      }
-      dailyHelpedUsersCountInLast14Days {
-        count
-      }
-    }
-    receivedThanks
-    answerCountBySubject {
-      subject {
-        name
-        slug
         id
       }
       count
@@ -197,7 +84,6 @@ query SearchQuery($query: String!, $len: Int!) {
     edges {
       node {
         id
-        databaseId
         points
         pointsForAnswer
         pointsForBestAnswer
@@ -212,8 +98,6 @@ query SearchQuery($query: String!, $len: Int!) {
             url
             thumbnailUrl
           }
-          databaseId
-          description
           helpedUsersCount
           gender
           created
@@ -246,7 +130,8 @@ query SearchQuery($query: String!, $len: Int!) {
                   name
                 }
                 subject {
-                  slug
+                  name
+                  id
                 }
                 points
                 pointsForBestAnswer
@@ -264,7 +149,6 @@ query SearchQuery($query: String!, $len: Int!) {
                 answers {
                   nodes {
                     id
-                    databaseId
                     content
                     created
                     isBest
@@ -276,7 +160,7 @@ query SearchQuery($query: String!, $len: Int!) {
                       approval {
                         approver {
                           nick
-                          databaseId
+                          id
                         }
                       }
                     }
@@ -288,7 +172,7 @@ query SearchQuery($query: String!, $len: Int!) {
                       count
                       edges {
                         node {
-                          databaseId
+                          id
                           deleted
                           content
                           author {
@@ -298,14 +182,12 @@ query SearchQuery($query: String!, $len: Int!) {
                               url
                               thumbnailUrl
                             }
-                            databaseId
                             friends {
                               count
                             }
                             receivedThanks
                             points
                             created
-                            description
                           }
                         }
                       }
@@ -325,7 +207,8 @@ query SearchQuery($query: String!, $len: Int!) {
         }
         lastActivity
         subject {
-          slug
+          name
+          id
         }
         eduLevel
         similar {
@@ -338,8 +221,6 @@ query SearchQuery($query: String!, $len: Int!) {
                 thumbnailUrl
               }
               id
-              databaseId
-              description
               helpedUsersCount
               gender
               created
@@ -372,7 +253,8 @@ query SearchQuery($query: String!, $len: Int!) {
                       name
                     }
                     subject {
-                      slug
+                      name
+                      id
                     }
                     points
                     pointsForBestAnswer
@@ -390,7 +272,6 @@ query SearchQuery($query: String!, $len: Int!) {
                     answers {
                       nodes {
                         id
-                        databaseId
                         content
                         created
                         isBest
@@ -401,7 +282,7 @@ query SearchQuery($query: String!, $len: Int!) {
                           approval {
                             approver {
                               nick
-                              databaseId
+                              id
                             }
                           }
                         }
@@ -416,7 +297,7 @@ query SearchQuery($query: String!, $len: Int!) {
                               content
                               author {
                                 nick
-                                databaseId
+                                id
                                 avatar {
                                   url
                                 }
@@ -431,7 +312,6 @@ query SearchQuery($query: String!, $len: Int!) {
               }
             }
             id
-            databaseId
             points
             pointsForAnswer
             pointsForBestAnswer
@@ -455,8 +335,6 @@ query SearchQuery($query: String!, $len: Int!) {
                 thumbnailUrl
               }
               id
-              databaseId
-              description
               helpedUsersCount
               gender
               created
@@ -489,7 +367,8 @@ query SearchQuery($query: String!, $len: Int!) {
                       name
                     }
                     subject {
-                      slug
+                      name
+                      id
                     }
                     points
                     pointsForBestAnswer
@@ -507,7 +386,6 @@ query SearchQuery($query: String!, $len: Int!) {
                     answers {
                       nodes {
                         id
-                        databaseId
                         content
                         created
                         isBest
@@ -519,7 +397,7 @@ query SearchQuery($query: String!, $len: Int!) {
                           approval {
                             approver {
                               nick
-                              databaseId
+                              id
                             }
                           }
                         }
@@ -532,7 +410,6 @@ query SearchQuery($query: String!, $len: Int!) {
                           edges {
                             node {
                               id
-                              databaseId
                               deleted
                               content
                               author {
@@ -542,14 +419,12 @@ query SearchQuery($query: String!, $len: Int!) {
                                   thumbnailUrl
                                 }
                                 id
-                                databaseId
                                 friends {
                                   count
                                 }
                                 receivedThanks
                                 points
                                 created
-                                description
                               }
                             }
                           }
@@ -572,7 +447,6 @@ query SearchQuery($query: String!, $len: Int!) {
               edges {
                 node {
                   id
-                  databaseId
                   deleted
                   content
                   author {
@@ -582,14 +456,12 @@ query SearchQuery($query: String!, $len: Int!) {
                       thumbnailUrl
                     }
                     id
-                    databaseId
                     friends {
                       count
                     }
                     receivedThanks
                     points
                     created
-                    description
                   }
                 }
               }
@@ -602,4 +474,397 @@ query SearchQuery($query: String!, $len: Int!) {
       }
     }
   }
+}
+
+query FindQuestion($id: ID!) {
+  question: question(id: $id) {
+        id
+        points
+        pointsForAnswer
+        pointsForBestAnswer
+        created
+        isClosed
+        content
+        author {
+          id
+          nick
+          receivedThanks
+          avatar {
+            url
+            thumbnailUrl
+          }
+          helpedUsersCount
+          gender
+          created
+          specialRanks {
+            name
+          }
+          bestAnswersCount
+          answererLevel
+          points
+          rank {
+            name
+          }
+          friends {
+            count
+          }
+          answeringStreak {
+            pointsForToday
+            pointsForTomorrow
+            progressIncreasedToday
+            progress
+            canLotteryPointsBeClaimed
+          }
+          bestAnswersCountInLast30Days
+          questions {
+            count
+            edges {
+              node {
+                content
+                grade {
+                  name
+                }
+                subject {
+                  name
+                  id
+                }
+                points
+                pointsForBestAnswer
+                pointsForAnswer
+                isClosed
+                canBeAnswered
+                created
+                attachments {
+                  url
+                }
+                grade {
+                  name
+                }
+                eduLevel
+                answers {
+                  nodes {
+                    id
+                    content
+                    created
+                    isBest
+                    isConfirmed
+                    qualityScore
+                    points
+                    ratesCount
+                    verification {
+                      approval {
+                        approver {
+                          nick
+                          id
+                        }
+                      }
+                    }
+                    attachments {
+                      url
+                    }
+                    canComment
+                    comments {
+                      count
+                      edges {
+                        node {
+                          id
+                          deleted
+                          content
+                          author {
+                            id
+                            nick
+                            avatar {
+                              url
+                              thumbnailUrl
+                            }
+                            friends {
+                              count
+                            }
+                            receivedThanks
+                            points
+                            created
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        canBeAnswered
+        grade {
+          name
+        }
+        attachments {
+          url
+        }
+        lastActivity
+        subject {
+          name
+          id
+        }
+        eduLevel
+        similar {
+          question {
+            content
+            author {
+              nick
+              avatar {
+                url
+                thumbnailUrl
+              }
+              id
+              helpedUsersCount
+              gender
+              created
+              specialRanks {
+                name
+              }
+              bestAnswersCount
+              answererLevel
+              points
+              rank {
+                name
+              }
+              friends {
+                count
+              }
+              answeringStreak {
+                pointsForToday
+                pointsForTomorrow
+                progressIncreasedToday
+                progress
+                canLotteryPointsBeClaimed
+              }
+              bestAnswersCountInLast30Days
+              questions {
+                count
+                edges {
+                  node {
+                    content
+                    grade {
+                      name
+                    }
+                    subject {
+                      name
+                      id
+                    }
+                    points
+                    pointsForBestAnswer
+                    pointsForAnswer
+                    isClosed
+                    canBeAnswered
+                    created
+                    attachments {
+                      url
+                    }
+                    grade {
+                      name
+                    }
+                    eduLevel
+                    answers {
+                      nodes {
+                        id
+                        content
+                        created
+                        isBest
+                        isConfirmed
+                        points
+                        ratesCount
+                        verification {
+                          approval {
+                            approver {
+                              nick
+                              id
+                            }
+                          }
+                        }
+                        attachments {
+                          url
+                        }
+                        canComment
+                        comments {
+                          count
+                          edges {
+                            node {
+                              content
+                              author {
+                                nick
+                                id
+                                avatar {
+                                  url
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            id
+            points
+            pointsForAnswer
+            pointsForBestAnswer
+            created
+            isClosed
+            canBeAnswered
+            grade {
+              name
+            }
+            eduLevel
+          }
+        }
+        content
+        answers {
+          hasVerified
+          nodes {
+            author {
+              receivedThanks
+              avatar {
+                url
+                thumbnailUrl
+              }
+              id
+              helpedUsersCount
+              gender
+              created
+              specialRanks {
+                name
+              }
+              bestAnswersCount
+              answererLevel
+              points
+              rank {
+                name
+              }
+              friends {
+                count
+              }
+              answeringStreak {
+                pointsForToday
+                pointsForTomorrow
+                progressIncreasedToday
+                progress
+                canLotteryPointsBeClaimed
+              }
+              bestAnswersCountInLast30Days
+              questions {
+                count
+                edges {
+                  node {
+                    content
+                    grade {
+                      name
+                    }
+                    subject {
+                      name
+                      id
+                    }
+                    points
+                    pointsForBestAnswer
+                    pointsForAnswer
+                    isClosed
+                    canBeAnswered
+                    created
+                    attachments {
+                      url
+                    }
+                    grade {
+                      name
+                    }
+                    eduLevel
+                    answers {
+                      nodes {
+                        id
+                        content
+                        created
+                        isBest
+                        isConfirmed
+                        qualityScore
+                        points
+                        ratesCount
+                        verification {
+                          approval {
+                            approver {
+                              nick
+                              id
+                            }
+                          }
+                        }
+                        attachments {
+                          url
+                        }
+                        canComment
+                        comments {
+                          count
+                          edges {
+                            node {
+                              id
+                              deleted
+                              content
+                              author {
+                                nick
+                                avatar {
+                                  url
+                                  thumbnailUrl
+                                }
+                                id
+                                friends {
+                                  count
+                                }
+                                receivedThanks
+                                points
+                                created
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            content
+            points
+            isBest
+            canComment
+            isConfirmed
+            qualityScore
+            thanksCount
+            ratesCount
+            comments {
+              edges {
+                node {
+                  id
+                  deleted
+                  content
+                  author {
+                    nick
+                    avatar {
+                      url
+                      thumbnailUrl
+                    }
+                    id
+                    friends {
+                      count
+                    }
+                    receivedThanks
+                    points
+                    created
+                  }
+                }
+              }
+            }
+            attachments {
+              url
+            }
+          }
+        }
+      }
 }
