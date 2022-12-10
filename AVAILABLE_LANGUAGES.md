@@ -17,5 +17,8 @@
 const Brainly = require("brainly-scraper-v2");
 const brain = new Brainly("id"); // 'id' - Can be replaced with the country code above. Default to 'id'
 
-brain.search("id", "Pythagoras").then(console.log).catch(console.error);
+// do '.initialize()' (v2.1.0)
+brain.initialize();
+
+brain.search("Pythagoras").then(console.log).catch(console.error);
 ```
