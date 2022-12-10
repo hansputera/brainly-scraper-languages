@@ -78,10 +78,12 @@ export async function findUser({
 	country,
 	language,
 	userId,
+	options,
 }: {
 	country: CountryList;
 	language: LanguageList;
 	userId: number | string;
+	options?: AxiosRequestConfig;
 }): Promise<Author | { err: string } | undefined> {
 	if (!Piscina.isWorkerThread) {
 		throw new Error("You're not able to use this command");
@@ -105,6 +107,7 @@ export async function findUser({
 		const response = await Brainly.client(country).post(
 			`graphql/${language.toLowerCase()}`,
 			body,
+			options,
 		);
 
 		if (response.status !== 200) {

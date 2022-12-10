@@ -1,6 +1,6 @@
 import Piscina from 'piscina';
 import Path from 'path';
-import type { AxiosRequestConfig, AxiosInstance } from 'axios';
+import { AxiosRequestConfig, AxiosInstance } from 'axios';
 import { baseURLs, getGraphqlQuery, languages } from './config';
 import {
 	Answer,
@@ -12,6 +12,7 @@ import {
 } from './types';
 import { fetcherClient } from './fetcher';
 import { Cache } from './cache';
+import Util from './util';
 
 /**
  * @class Brainly
@@ -32,6 +33,11 @@ export class Brainly {
 	 *
 	 */
 	public cache!: Cache;
+
+	/**
+	 * Zadane cookie
+	 */
+	#cookieZadane = Util.generateZadaneCookieGuest();
 
 	/**
 	 *
@@ -71,7 +77,7 @@ export class Brainly {
 		question: string,
 		language: LanguageList = 'id',
 		length: number = 10,
-		options?: AxiosRequestConfig,
+		options: AxiosRequestConfig = {},
 	): Promise<{ question: Question; answers: Answer[] }[]> {
 		try {
 			if (
@@ -83,6 +89,10 @@ export class Brainly {
 					answers: Answer[];
 				}[];
 			}
+
+			options.headers ??= {
+				Cookie: this.#cookieZadane,
+			};
 			const result = await this.worker.run(
 				{
 					c: this.country.toLowerCase(),
@@ -154,14 +164,19 @@ export class Brainly {
 	/**
 	 * Find a Brainly User's Information.
 	 * @param {CountryList} country The user's country (you must fill it correctly)
-	 * @param {number | string} userId User's id (you can use Author.id or Author._id to fill it)
+	 * @param {number | string} userId User's id (you can use Buffer.from(author.id).toString('base64') to fill it)
+	 * @param {AxiosRequestConfig} options Additional axios request options
 	 * @return {Promise<Author | undefined>}
 	 */
 	public async findUserById(
 		country: CountryList,
 		userId: number | string,
+		options: AxiosRequestConfig = {},
 	): Promise<Author | undefined> {
 		return await new Promise(async (resolve) => {
+			options.headers ??= {
+				Cookie: this.#cookieZadane,
+			};
 			const result = await Promise.any(
 				languages.map((country2) =>
 					this.worker.run(
@@ -169,6 +184,7 @@ export class Brainly {
 							country: country2,
 							language: country.toLowerCase(),
 							userId: userId,
+							options,
 						},
 						{
 							name: 'findUser',
@@ -200,7 +216,7 @@ export class Brainly {
 		question: string,
 		language: LanguageList = 'id',
 		length: number = 10,
-		options?: AxiosRequestConfig,
+		options: AxiosRequestConfig = {},
 	): Promise<{ question: Question; answers: Answer[] }[]> {
 		if (
 			this.enabledCache &&
@@ -211,6 +227,10 @@ export class Brainly {
 				answers: Answer[];
 			}[];
 		}
+
+		options.headers ??= {
+			Cookie: this.#cookieZadane,
+		};
 		return await new Promise(async (resolve) => {
 			const result = await Promise.any(
 				languages.map((country) =>
