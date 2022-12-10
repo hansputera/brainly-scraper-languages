@@ -27,6 +27,28 @@ export default class Util {
 			.split(':');
 		return [type, parseInt(idSubject)];
 	}
+
+	/**
+	 * Convert decoded ID
+	 * @param {(string | number)[] | string | number} id The ID want to encode
+	 * @param {string} type The ID type (e.g. user, grade, rank, subject, etc...)
+	 * @return {string}
+	 */
+	static convertId(
+		id: (string | number)[] | string | number,
+		type?: string,
+	): string {
+		if (typeof id === 'number' && !type)
+			throw new TypeError('You need to fill the type for this ID!');
+
+		return Buffer.from(
+			Array.isArray(id)
+				? id.join(':')
+				: type?.length
+				? type + ':' + id.toString()
+				: id.toString(),
+		).toString('base64');
+	}
 	/**
 	 * Normalize a text
 	 *

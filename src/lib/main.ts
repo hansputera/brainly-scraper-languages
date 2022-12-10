@@ -164,7 +164,7 @@ export class Brainly {
 	/**
 	 * Find a Brainly User's Information.
 	 * @param {CountryList} country The user's country (you must fill it correctly)
-	 * @param {number | string} userId User's id (you can use Buffer.from(author.id).toString('base64') to fill it)
+	 * @param {number | string} userId User's id (you can use Util.convertId(author.databaseId, 'user') to fill it)
 	 * @param {AxiosRequestConfig} options Additional axios request options
 	 * @return {Promise<Author | undefined>}
 	 */
