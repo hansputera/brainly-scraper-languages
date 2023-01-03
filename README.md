@@ -4,7 +4,7 @@ This library retrieves data from Brainly that has been designed to avoid `403 Fo
 
 > To avoid such errors, you can fill in a valid country code. You can test the 10 languages or country codes available to see if your server hosting country location or location is rejected.
 
-See https://github.com/hansputera/brainly-scraper-languages/blob/master/AVAILABLE_LANGUAGES.md
+See https://github.com/hanifdwyputras/brainly-scraper-v2/blob/master/AVAILABLE_LANGUAGES.md
 
 # 💉 Installation
 - Using NPM : `npm install brainly-scraper-v2`
@@ -55,10 +55,10 @@ brain.search("Pythagoras", "es").then(console.log).catch(console.error);
 ```
 
 #  ⏱ Changelogs
-You can check the changelogs on the [GitHub Releases Page](https://github.com/hansputera/brainly-scraper-languages/releases)
+You can check the changelogs on the [GitHub Releases Page](https://github.com/hanifdwyputras/brainly-scraper-v2/releases)
 
 # ⚙️ Issues and Bugs
-If you have problems using this library, you can create an issue in the [github repository](https://github.com/hansputera/brainly-scraper-languages). Remember, don't forget to read the instructions and try.
+If you have problems using this library, you can create an issue in the [github repository](https://github.com/hanifdwyputras/brainly-scraper-v2). Remember, don't forget to read the instructions and try.
 
 # ✍️ Contributions
-Do you want to contribute with this library for the better? Very well, fork this [github repository](https://github.com/hansputera/brainly-scraper-languages) then install dependencies to your directory. Happy coding 😁
+Do you want to contribute with this library for the better? Very well, fork this [github repository](https://github.com/hanifdwyputras/brainly-scraper-v2) then install dependencies to your directory. Happy coding 😁
