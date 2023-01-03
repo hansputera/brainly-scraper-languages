@@ -38,8 +38,8 @@ export async function search({
 			};
 		}
 		const body = await Brainly.getRequestParams('SearchQuery', {
-			question,
-			length,
+			query: question,
+			len: length,
 		});
 
 		const response = await Brainly.client(c).post(
