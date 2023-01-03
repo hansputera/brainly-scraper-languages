@@ -125,18 +125,20 @@ export class Brainly {
 	}
 
 	/**
-	 * Search question by ID
-	 * @param {number | string} id The question ID
-	 * @param {LanguageList} language The language of question (you should fill it correctly)
-	 * @param {AxiosRequestConfig} options Axios request configurations
-	 * @return {Promise<{question: Question; answers: Answer[]}>}
+	 * Use this function if you want search question, it will returns question detail, question author, answer detail, attachments (if question or answer attachments is any), rating question and answer.
 	 *
-	 * @example
+	 * @description Find question by ID
+	 * @param {number | string} id The question ID
+	 * @param {LanguageList?} language The language of question (you should fill it correctly)
+	 * @param {AxiosRequestConfig?} options Axios request configurations
+	 *
+	 * Example:
 	 * ```ts
 	 * brain.searchById(52885142);
 	 * // OR
-	 * brainly.searchById('cXVlc3Rpb246NTI4ODUxNDI=');
+	 * brain.searchById('cXVlc3Rpb246NTI4ODUxNDI=');
 	 * ```
+	 * @return {Promise<{ question: Question, answers: Answer[] }>}
 	 */
 	public async searchById(
 		id: number | string,

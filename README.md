@@ -17,10 +17,10 @@ See https://github.com/hanifdwyputras/brainly-scraper-v2/blob/master/AVAILABLE_L
 
 ```js
 const { Brainly } = require("brainly-scraper-v2");
-const brain = new Brainly("id"); // 'id' - Default to 'id'
-
 // You should do '.initialize()' for 1st time (v2.1.0 - higher)
-brain.initialize();
+Brainly.initialize();
+
+const brain = new Brainly("id"); // 'id' - Default to 'id'
 
 // You can do
 brain.searchWithMT("Pythagoras", "es").then(console.log).catch(console.error);
