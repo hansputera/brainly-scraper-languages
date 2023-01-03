@@ -719,6 +719,8 @@ query FindQuestionById($id: ID!) {
           name
         }
         eduLevel
+        subject { name }
+        attachments { url }
       }
     }
     content
