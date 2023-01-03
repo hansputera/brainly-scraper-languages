@@ -26,19 +26,19 @@ export const actionGraphQLSchemas = async (
 		case 'read':
 			if (
 				!(await statCall(
-					pathResolve(brainlyScraperDir, 'gql.json'),
+					pathResolve(brainlyScraperDir, 'schemas.gql'),
 					(stat) => stat.isFile(),
 				))
 			) {
-				throw new Error("Couldn't find gql.json");
+				throw new Error("Couldn't find schemas.gql");
 			}
 
-			return readFile(pathResolve(brainlyScraperDir, 'gql.json'), {
+			return readFile(pathResolve(brainlyScraperDir, 'schemas.gql'), {
 				encoding: 'utf8',
 			});
 		case 'write':
 			const file = createWriteStream(
-				pathResolve(brainlyScraperDir, 'gql.json'),
+				pathResolve(brainlyScraperDir, 'schemas.gql'),
 			);
 
 			contentStream?.pipe(file);
