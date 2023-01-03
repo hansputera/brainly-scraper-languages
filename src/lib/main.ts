@@ -125,6 +125,64 @@ export class Brainly {
 	}
 
 	/**
+	 * Search question by ID
+	 * @param {number | string} id The question ID
+	 * @param {LanguageList} language The language of question (you should fill it correctly)
+	 * @param {AxiosRequestConfig} options Axios request configurations
+	 * @return {Promise<{question: Question; answers: Answer[]}>}
+	 *
+	 * @example
+	 * ```ts
+	 * brain.searchById(52885142);
+	 * // OR
+	 * brainly.searchById('cXVlc3Rpb246NTI4ODUxNDI=');
+	 * ```
+	 */
+	public async searchById(
+		id: number | string,
+		language: LanguageList = 'id',
+		options: AxiosRequestConfig = {},
+	): Promise<{ question: Question; answers: Answer[] } | undefined> {
+		try {
+			if (
+				this.enabledCache &&
+				this.cache.has(language, id.toString().toLowerCase())
+			) {
+				return this.cache
+					.get(language, id.toString().toLowerCase())
+					?.at(0);
+			}
+
+			options.headers ??= {
+				Cookie: this.#cookieZadane,
+			};
+
+			return await new Promise(async (resolve) => {
+				const result = await Promise.any(
+					languages.map((country) =>
+						this.worker.run(
+							{
+								country: country,
+								language,
+								options,
+								id: isNaN(parseInt(id.toString(), 10))
+									? id
+									: Util.convertId(id, 'question'),
+							},
+							{ name: 'searchById' },
+						),
+					),
+				);
+				if (this.enabledCache)
+					this.cache.set(language, id.toString(), [result]);
+				resolve(result);
+			});
+		} catch (error) {
+			throw new Error(error as string);
+		}
+	}
+
+	/**
 	 * Get body request to sent.
 	 * @param {string} query Operation query name
 	 * @param {Record<string, unknown>} vars Variables want to sent

@@ -121,3 +121,52 @@ export async function findUser({
 		throw new Error((err as Error).message);
 	}
 }
+
+/**
+ *
+ * @param {{country: CountryList, language: LanguageList, id: string, options: AxiosRequestConfig}} arg_0
+ * @return {Promise<{question: Question, answers: Answer[]} | { err: string; }>}
+ */
+export async function searchQuestionById({
+	id,
+	language = 'id',
+	country,
+	options,
+}: {
+	id: string;
+	language: LanguageList;
+	country: CountryList;
+	options: AxiosRequestConfig;
+}) {
+	if (!Piscina.isWorkerThread) {
+		throw new Error("You're not able to use this command");
+	}
+	try {
+		if (!Brainly.isValidLanguage(language)) {
+			return {
+				err: 'INVALID_LANGUAGE',
+			};
+		}
+		const body = await Brainly.getRequestParams('FindQuestionById', {
+			id,
+		});
+
+		const response = await Brainly.client(country).post(
+			`graphql/${language.toLowerCase()}`,
+			body,
+			options,
+		);
+		const json = response.data as JsonRes;
+		const validJSON = json.data.question;
+
+		const question: Question = Util.convertQuestion(validJSON!);
+
+		const answers: Answer[] = validJSON?.answers.nodes.map((answerObj) =>
+			Util.convertAnswer(answerObj),
+		)!;
+
+		return { question, answers };
+	} catch (err) {
+		throw new Error((err as Error).message);
+	}
+}

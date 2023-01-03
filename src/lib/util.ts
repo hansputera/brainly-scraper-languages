@@ -7,6 +7,7 @@ import type {
 	OriginalAnswer,
 	OriginalAuthor,
 	OriginalComment,
+	OriginalQuestion,
 	OriginalQuestionAndSimilar,
 	Question,
 	WorkType,
@@ -215,7 +216,7 @@ export default class Util {
 	 * @return {Question}
 	 */
 	public static convertQuestion(
-		question: OriginalQuestionAndSimilar,
+		question: OriginalQuestionAndSimilar | OriginalQuestion,
 	): Question {
 		const parseId = Util.parseId(question.id);
 		const expectedObject: Question = {
@@ -243,6 +244,12 @@ export default class Util {
 			verifiedAnswer: question.answers.hasVerified,
 			// answers: question.answers.nodes.map((x) => this.convertAnswer(x)),
 			databaseId: parseId[1],
+			similars:
+				'similar' in question
+					? question.similar?.question.map((q) =>
+							Util.convertQuestion(q),
+					  )
+					: [],
 		};
 
 		return expectedObject;

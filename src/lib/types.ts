@@ -43,6 +43,7 @@ export type JsonRes = {
 			edges: BrainlyResponse[];
 		};
 		user?: OriginalAuthor;
+		question?: OriginalQuestionAndSimilar;
 	};
 };
 
@@ -108,6 +109,11 @@ export interface Question {
 	 * Database ID
 	 */
 	databaseId: number;
+
+	/**
+	 * Similar questions
+	 */
+	similars: Question[];
 }
 
 /**
