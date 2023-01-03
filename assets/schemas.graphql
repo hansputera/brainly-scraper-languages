@@ -444,6 +444,7 @@ query SearchQuery($query: String!, $len: Int!) {
                 canComment
                 isConfirmed
                 qualityScore
+                id
                 thanksCount
                 ratesCount
                 comments {
@@ -594,6 +595,7 @@ query SearchQuery($query: String!, $len: Int!) {
             isConfirmed
             qualityScore
             thanksCount
+            id
             ratesCount
             comments {
               edges {
@@ -992,6 +994,7 @@ query FindQuestionById($id: ID!) {
             isConfirmed
             qualityScore
             thanksCount
+            id
             ratesCount
             comments {
               edges {
