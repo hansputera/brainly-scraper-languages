@@ -38,16 +38,18 @@ export class Brainly {
 	/**
 	 * Zadane cookie
 	 */
-	#cookieZadane = Util.generateZadaneCookieGuest();
+	#cookieZadane: string = '';
 
 	/**
 	 *
 	 * @param {LanguageList?} country - Here, please put your application server country code. if you do not enter valid region/country code. It will trigger an Error Exception.
 	 * @param {boolean?} enabledCache - Brainly Cache condition, you can disable/enable it.
+	 * @param {boolean?} useZadaneCookie - Use zadane cookie to request
 	 */
 	constructor(
 		public country: CountryList = 'id',
 		private enabledCache: boolean = true,
+		useZadaneCookie: boolean = true,
 	) {
 		if (!Brainly.isValidLanguage(country)) {
 			throw new TypeError('Please put valid country!');
@@ -56,6 +58,11 @@ export class Brainly {
 		// create cache instance, if 'enabledCache' is true.
 		if (enabledCache) {
 			this.cache = new Cache();
+		}
+
+		// initialize zadane cookie if enabled
+		if (useZadaneCookie) {
+			this.#cookieZadane = Util.generateZadaneCookieGuest();
 		}
 	}
 
