@@ -322,6 +322,8 @@ query SearchQuery($query: String!, $len: Int!) {
               name
             }
             eduLevel
+            attachments { url }
+            subject { name }
           }
         }
         content
