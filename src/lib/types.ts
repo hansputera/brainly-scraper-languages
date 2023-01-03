@@ -301,8 +301,8 @@ export interface OriginalQuestion {
 
 export interface OriginalQuestionAndSimilar extends OriginalQuestion {
 	similar: {
-		question: OriginalQuestion[];
-	};
+		question: OriginalQuestion;
+	}[];
 }
 
 export interface OriginalAnswer {

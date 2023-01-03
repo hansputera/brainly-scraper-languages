@@ -246,8 +246,8 @@ export default class Util {
 			databaseId: parseId[1],
 			similars:
 				'similar' in question
-					? question.similar?.question.map((q) =>
-							Util.convertQuestion(q),
+					? question.similar?.map((q) =>
+							Util.convertQuestion(q.question),
 					  )
 					: [],
 		};
