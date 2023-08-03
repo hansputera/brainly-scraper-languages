@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "5.30.6",
     "eslint": "8.19.0",
     "eslint-config-google": "0.14.0",
-    "eslint-config-prettier": "8.5.0",
+    "eslint-config-prettier": "8.10.0",
     "husky": "8.0.1",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
